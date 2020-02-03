@@ -15,14 +15,14 @@
 		</commentGenerator>
 
 		<jdbcConnection driverClass="org.postgresql.Driver"
-			connectionURL="jdbc:postgresql://localhost:56001/ST_Webstudy"
+			connectionURL="jdbc:postgresql://localhost:56001/WMSJ"
 			userId="postgres"
 			password="123456" />
 
-		<javaModelGenerator targetPackage="com.samton.web.manage.finance.bean.entity" targetProject="src/main/java" />
-		<sqlMapGenerator targetPackage="com.samton.web.manage.finance.dao.mapping" targetProject="src/main/java" />
-		<javaClientGenerator targetPackage="com.samton.web.manage.finance.dao" targetProject="src/main/java" type="XMLMAPPER"></javaClientGenerator>
-		<table schema="public" tableName="t_card_order_pay"
+		<javaModelGenerator targetPackage="com.samton.web.manage.customer.bean.entity" targetProject="src/main/java" />
+		<sqlMapGenerator targetPackage="com.samton.web.manage.customer.dao.mapping" targetProject="src/main/java" />
+		<javaClientGenerator targetPackage="com.samton.web.manage.customer.dao" targetProject="src/main/java" type="XMLMAPPER"></javaClientGenerator>
+		<table schema="public" tableName="t_customer"
 			enableCountByExample="false"
 			enableUpdateByExample="false"
 			enableDeleteByExample="false"

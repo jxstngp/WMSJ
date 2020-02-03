@@ -19,8 +19,6 @@
     <typeAliases>
         <package name="com.samton.web.manage.customer.bean.entity"/>
         <package name="com.samton.web.manage.customer.bean.vo"/>
-        <package name="com.samton.web.manage.finance.bean.entity"/>
-        <package name="com.samton.web.manage.finance.bean.vo"/>
 
     </typeAliases>
 </configuration>
