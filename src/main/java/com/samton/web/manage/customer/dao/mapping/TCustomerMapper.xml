@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.web.manage.customer.dao.TCustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.samton.web.manage.customer.bean.entity.TCustomer" >
+    <id column="cust_id" property="custId" jdbcType="INTEGER" />
+    <result column="cust_code" property="custCode" jdbcType="VARCHAR" />
+    <result column="cust_name" property="custName" jdbcType="VARCHAR" />
+    <result column="wechat_name" property="wechatName" jdbcType="VARCHAR" />
+    <result column="fq_level" property="fqLevel" jdbcType="SMALLINT" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="SMALLINT" />
+    <result column="birthday" property="birthday" jdbcType="DATE" />
+    <result column="mobile" property="mobile" jdbcType="CHAR" />
+    <result column="register_type" property="registerType" jdbcType="SMALLINT" />
+    <result column="wechat_code" property="wechatCode" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="BIGINT" />
+    <result column="city_id" property="cityId" jdbcType="BIGINT" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="head" property="head" jdbcType="VARCHAR" />
+    <result column="client_id" property="clientId" jdbcType="VARCHAR" />
+    <result column="is_forbid" property="isForbid" jdbcType="SMALLINT" />
+    <result column="last_time" property="lastTime" jdbcType="TIMESTAMP" />
+    <result column="last_ip" property="lastIp" jdbcType="VARCHAR" />
+    <result column="option_system" property="optionSystem" jdbcType="SMALLINT" />
+    <result column="register_date" property="registerDate" jdbcType="TIMESTAMP" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    cust_id, cust_code, cust_name, wechat_name, fq_level, password, sex, birthday, mobile, 
+    register_type, wechat_code, province_id, city_id, address, head, client_id, is_forbid, 
+    last_time, last_ip, option_system, register_date, update_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_customer
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_customer
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.samton.web.manage.customer.bean.entity.TCustomer" >
+    insert into public.t_customer (cust_id, cust_code, cust_name, 
+      wechat_name, fq_level, password, 
+      sex, birthday, mobile, register_type, 
+      wechat_code, province_id, city_id, 
+      address, head, client_id, 
+      is_forbid, last_time, last_ip, 
+      option_system, register_date, update_date
+      )
+    values (#{custId,jdbcType=INTEGER}, #{custCode,jdbcType=VARCHAR}, #{custName,jdbcType=VARCHAR}, 
+      #{wechatName,jdbcType=VARCHAR}, #{fqLevel,jdbcType=SMALLINT}, #{password,jdbcType=VARCHAR}, 
+      #{sex,jdbcType=SMALLINT}, #{birthday,jdbcType=DATE}, #{mobile,jdbcType=CHAR}, #{registerType,jdbcType=SMALLINT}, 
+      #{wechatCode,jdbcType=VARCHAR}, #{provinceId,jdbcType=BIGINT}, #{cityId,jdbcType=BIGINT}, 
+      #{address,jdbcType=VARCHAR}, #{head,jdbcType=VARCHAR}, #{clientId,jdbcType=VARCHAR}, 
+      #{isForbid,jdbcType=SMALLINT}, #{lastTime,jdbcType=TIMESTAMP}, #{lastIp,jdbcType=VARCHAR}, 
+      #{optionSystem,jdbcType=SMALLINT}, #{registerDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.samton.web.manage.customer.bean.entity.TCustomer" >
+    insert into public.t_customer
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="custCode != null" >
+        cust_code,
+      </if>
+      <if test="custName != null" >
+        cust_name,
+      </if>
+      <if test="wechatName != null" >
+        wechat_name,
+      </if>
+      <if test="fqLevel != null" >
+        fq_level,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthday != null" >
+        birthday,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="registerType != null" >
+        register_type,
+      </if>
+      <if test="wechatCode != null" >
+        wechat_code,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="head != null" >
+        head,
+      </if>
+      <if test="clientId != null" >
+        client_id,
+      </if>
+      <if test="isForbid != null" >
+        is_forbid,
+      </if>
+      <if test="lastTime != null" >
+        last_time,
+      </if>
+      <if test="lastIp != null" >
+        last_ip,
+      </if>
+      <if test="optionSystem != null" >
+        option_system,
+      </if>
+      <if test="registerDate != null" >
+        register_date,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="custId != null" >
+        #{custId,jdbcType=INTEGER},
+      </if>
+      <if test="custCode != null" >
+        #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null" >
+        #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="fqLevel != null" >
+        #{fqLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null" >
+        #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="registerType != null" >
+        #{registerType,jdbcType=SMALLINT},
+      </if>
+      <if test="wechatCode != null" >
+        #{wechatCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        #{head,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="isForbid != null" >
+        #{isForbid,jdbcType=SMALLINT},
+      </if>
+      <if test="lastTime != null" >
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastIp != null" >
+        #{lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="optionSystem != null" >
+        #{optionSystem,jdbcType=SMALLINT},
+      </if>
+      <if test="registerDate != null" >
+        #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.samton.web.manage.customer.bean.entity.TCustomer" >
+    update public.t_customer
+    <set >
+      <if test="custCode != null" >
+        cust_code = #{custCode,jdbcType=VARCHAR},
+      </if>
+      <if test="custName != null" >
+        cust_name = #{custName,jdbcType=VARCHAR},
+      </if>
+      <if test="wechatName != null" >
+        wechat_name = #{wechatName,jdbcType=VARCHAR},
+      </if>
+      <if test="fqLevel != null" >
+        fq_level = #{fqLevel,jdbcType=SMALLINT},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=SMALLINT},
+      </if>
+      <if test="birthday != null" >
+        birthday = #{birthday,jdbcType=DATE},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=CHAR},
+      </if>
+      <if test="registerType != null" >
+        register_type = #{registerType,jdbcType=SMALLINT},
+      </if>
+      <if test="wechatCode != null" >
+        wechat_code = #{wechatCode,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=BIGINT},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=BIGINT},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="head != null" >
+        head = #{head,jdbcType=VARCHAR},
+      </if>
+      <if test="clientId != null" >
+        client_id = #{clientId,jdbcType=VARCHAR},
+      </if>
+      <if test="isForbid != null" >
+        is_forbid = #{isForbid,jdbcType=SMALLINT},
+      </if>
+      <if test="lastTime != null" >
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastIp != null" >
+        last_ip = #{lastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="optionSystem != null" >
+        option_system = #{optionSystem,jdbcType=SMALLINT},
+      </if>
+      <if test="registerDate != null" >
+        register_date = #{registerDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.samton.web.manage.customer.bean.entity.TCustomer" >
+    update public.t_customer
+    set cust_code = #{custCode,jdbcType=VARCHAR},
+      cust_name = #{custName,jdbcType=VARCHAR},
+      wechat_name = #{wechatName,jdbcType=VARCHAR},
+      fq_level = #{fqLevel,jdbcType=SMALLINT},
+      password = #{password,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=SMALLINT},
+      birthday = #{birthday,jdbcType=DATE},
+      mobile = #{mobile,jdbcType=CHAR},
+      register_type = #{registerType,jdbcType=SMALLINT},
+      wechat_code = #{wechatCode,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=BIGINT},
+      city_id = #{cityId,jdbcType=BIGINT},
+      address = #{address,jdbcType=VARCHAR},
+      head = #{head,jdbcType=VARCHAR},
+      client_id = #{clientId,jdbcType=VARCHAR},
+      is_forbid = #{isForbid,jdbcType=SMALLINT},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      last_ip = #{lastIp,jdbcType=VARCHAR},
+      option_system = #{optionSystem,jdbcType=SMALLINT},
+      register_date = #{registerDate,jdbcType=TIMESTAMP},
+      update_date = #{updateDate,jdbcType=TIMESTAMP}
+    where cust_id = #{custId,jdbcType=INTEGER}
+  </update>
+
+  <!-- 客户信息管理分页查询where条件 -->
+  <sql id="queryPageList_where">
+    <if test="search != null">
+      <if test="search.custCode != null and search.custCode != ''">
+        and cust_code like '%'||#{search.custCode,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="search.wechatName != null and search.wechatName != ''">
+        and wechat_name like '%'||#{search.wechatName,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="search.mobile != null and search.mobile != ''">
+        and mobile like '%'||#{search.mobile,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="search.registerDateBegin != null">
+        and register_date <![CDATA[>=]]> to_date( #{search.registerDateBegin,jdbcType=DATE},'yyyy-MM-dd')
+      </if>
+      <if test="search.registerDateEnd != null">
+        and register_date <![CDATA[<=]]> to_date( #{search.registerDateEnd,jdbcType=DATE},'yyyy-MM-dd')
+      </if>
+      <if test="search.registerType != null">
+        and register_type = #{search.registerType,jdbcType=VARCHAR}
+      </if>
+      <if test="search.isForbid != null">
+        and is_forbid = #{search.isForbid,jdbcType=VARCHAR}
+      </if>
+    </if>
+  </sql>
+  <!-- 客户信息管理分页查询 -->
+  <select id="queryPageList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultType="CustomerVo">
+    select
+    <include refid="Base_Column_List"/>,
+    case when register_type = 0 then '手机号码' when register_type = 1 then '微信' else '' end as register_type_cN
+    from t_customer
+    <where>
+      <include refid="queryPageList_where" />
+    </where>
+  </select>
+
+  <!-- 客户信息管理页面导出 -->
+  <select id="exportPageList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultType="java.util.Map">
+    select
+    <include refid="Base_Column_List"/>
+    from t_customer
+    <where>
+      <include refid="queryPageList_where" />
+    </where>
+  </select>
+
+
+
+  <!-- 客户账户管理分页查询where条件 -->
+  <sql id="queryPageAccountList_where">
+    <if test="search != null">
+      <if test="search.custCode != null and search.custCode != ''">
+        and cust_code like '%'||#{search.custCode,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="search.wechatName != null and search.wechatName != ''">
+        and wechat_name like '%'||#{search.wechatName,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="search.mobile != null and search.mobile != ''">
+        and mobile like '%'||#{search.mobile,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="search.provinceId != null">
+        and a.province_id = #{search.provinceId,jdbcType=INTEGER}
+      </if>
+      <if test="search.cityId != null">
+        and a.city_id = #{search.cityId,jdbcType=INTEGER}
+      </if>
+    </if>
+  </sql>
+
+  <sql id="Base_Column_List_Vo" >
+    a.cust_id, a.cust_code, a.cust_name, a.wechat_name, a.fq_level, a.password, a.sex, a.birthday, a.mobile,
+    a.register_type, a.wechat_code, a.province_id, a.city_id, a.address, a.head, a.client_id, a.is_forbid,
+    a.last_time, a.last_ip, a.option_system, a.register_date, a.update_date
+  </sql>
+
+  <!-- 客户信息和账户信息查看 -->
+  <select id="selectCustomerVoById" parameterType="java.lang.Integer" resultType="CustomerVo">
+    select
+    <include refid="Base_Column_List_Vo"/>,b.province_name, c.city_name
+    from t_customer a
+    left join t_sys_province b on a.province_id = b.province_id
+    left join t_sys_city c on a.city_id = c.city_id
+    where a.cust_id = #{custId,jdbcType=INTEGER}
+  </select>
+
+  <!-- 客户账户管理分页查询 -->
+  <select id="queryPageAccountList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultType="CustomerVo">
+    select
+    <include refid="Base_Column_List_Vo"/>,b.province_name, c.city_name
+    from t_customer a
+    left join t_sys_province b on a.province_id = b.province_id
+    left join t_sys_city c on a.city_id = c.city_id
+    <where>
+      <include refid="queryPageAccountList_where" />
+    </where>
+  </select>
+
+  <!-- 客户账户管理页面导出 -->
+  <select id="exportPageAccountList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultType="java.util.Map">
+    select
+    <include refid="Base_Column_List_Vo"/>,b.province_name, c.city_name
+    from t_customer a
+    left join t_sys_province b on a.province_id = b.province_id
+    left join t_sys_city c on a.city_id = c.city_id
+    <where>
+      <include refid="queryPageAccountList_where" />
+    </where>
+  </select>
+</mapper>

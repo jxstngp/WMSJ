@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.pm.dao.TSysPmRoleMenuMapper">
+	<resultMap id="BaseResultMap"
+		type="com.samton.platform.pm.bean.entity.TSysPmRoleMenu">
+		<id column="role_menu_id" property="roleMenuId" jdbcType="BIGINT" />
+		<result column="role_id" property="roleId" jdbcType="BIGINT" />
+		<result column="menu_id" property="menuId" jdbcType="BIGINT" />
+		<result column="state" property="state" jdbcType="SMALLINT" />
+		<result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+		<result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_user_id" property="modifyUserId" jdbcType="BIGINT" />
+		<result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		role_menu_id, role_id, menu_id, state,
+		create_user_id, create_user_name,
+		create_date, modify_user_id,
+		modify_user_name, modify_date
+	</sql>
+
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from t_sys_pm_role_menu
+		where role_menu_id = #{roleMenuId,jdbcType=BIGINT}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		t_sys_pm_role_menu
+		where role_menu_id = #{roleMenuId,jdbcType=BIGINT}
+	</delete>
+
+	<insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TSysPmRoleMenu">
+		insert into t_sys_pm_role_menu
+		(role_menu_id, role_id, menu_id, state, create_user_id,
+		create_user_name, create_date, modify_user_id,
+		modify_user_name, modify_date)
+		values (#{roleMenuId,jdbcType=BIGINT},
+		#{roleId,jdbcType=BIGINT},
+		#{menuId,jdbcType=BIGINT},
+		#{state,jdbcType=SMALLINT},
+		#{createUserId,jdbcType=BIGINT},
+		#{createUserName,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{modifyUserId,jdbcType=BIGINT},
+		#{modifyUserName,jdbcType=VARCHAR},
+		#{modifyDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TSysPmRoleMenu">
+		insert into t_sys_pm_role_menu
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="roleMenuId != null">
+				role_menu_id,
+			</if>
+			<if test="roleId != null">
+				role_id,
+			</if>
+			<if test="menuId != null">
+				menu_id,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id,
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name,
+			</if>
+			<if test="modifyDate != null">
+				modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="roleMenuId != null">
+				#{roleMenuId,jdbcType=BIGINT},
+			</if>
+			<if test="roleId != null">
+				#{roleId,jdbcType=BIGINT},
+			</if>
+			<if test="menuId != null">
+				#{menuId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				#{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				#{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TSysPmRoleMenu">
+		update t_sys_pm_role_menu
+		<set>
+			<if test="roleId != null">
+				role_id = #{roleId,jdbcType=BIGINT},
+			</if>
+			<if test="menuId != null">
+				menu_id = #{menuId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where role_menu_id = #{roleMenuId,jdbcType=BIGINT}
+	</update>
+
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysPmRoleMenu">
+		update
+		t_sys_pm_role_menu
+		set role_id = #{roleId,jdbcType=BIGINT},
+		menu_id = #{menuId,jdbcType=BIGINT},
+		state = #{state,jdbcType=SMALLINT},
+		create_user_id = #{createUserId,jdbcType=BIGINT},
+		create_user_name = #{createUserName,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+		modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+		modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+		where role_menu_id = #{roleMenuId,jdbcType=BIGINT}
+	</update>
+
+	<select id="getRoleMenuIds" resultType="java.lang.Long">
+		select menu_id
+		from t_sys_pm_role_menu
+		where role_id = #{roleId,jdbcType=BIGINT}
+		and state = #{state,jdbcType=SMALLINT}
+	</select>
+
+	<insert id="batchInsert" parameterType="java.util.List">
+		insert into t_sys_pm_role_menu (role_id, menu_id, state,
+		create_user_id, create_user_name, create_date, modify_user_id,
+		modify_user_name, modify_date)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.roleId,jdbcType=BIGINT},
+			#{item.menuId,jdbcType=BIGINT},
+			#{item.state,jdbcType=SMALLINT},
+			#{item.createUserId,jdbcType=BIGINT},
+			#{item.createUserName,jdbcType=VARCHAR},
+			#{item.createDate,jdbcType=TIMESTAMP},
+			#{item.modifyUserId,jdbcType=BIGINT},
+			#{item.modifyUserName,jdbcType=VARCHAR},
+			#{item.modifyDate,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+
+	<update id="batchUpdateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysPmRoleMenu">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			update t_sys_pm_role_menu
+			<set>
+				role_id = #{item.roleId,jdbcType=BIGINT},
+				menu_id = #{item.menuId,jdbcType=BIGINT},
+				state = #{item.state,jdbcType=SMALLINT},
+				create_user_id = #{item.createUserId,jdbcType=BIGINT},
+				create_user_name = #{item.createUserName,jdbcType=VARCHAR},
+				create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				modify_user_id = #{item.modifyUserId,jdbcType=BIGINT},
+				modify_user_name = #{item.modifyUserName,jdbcType=VARCHAR},
+				modify_date = #{item.modifyDate,jdbcType=TIMESTAMP}
+			</set>
+			where role_menu_id = #{item.roleMenuId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+
+	<select id="getRoleMenus" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_sys_pm_role_menu
+		where role_id = #{roleId,jdbcType=BIGINT}
+	</select>
+
+</mapper>

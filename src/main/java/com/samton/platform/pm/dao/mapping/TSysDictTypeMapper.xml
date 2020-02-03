@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samton.platform.pm.dao.TSysDictTypeMapper">
+	<resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TSysDictType">
+		<id column="type_id" jdbcType="BIGINT" property="typeId" />
+		<result column="type_name" jdbcType="VARCHAR" property="typeName" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="state" jdbcType="SMALLINT" property="state" />
+		<result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+		<result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="modify_user_id" jdbcType="BIGINT" property="modifyUserId" />
+		<result column="modify_user_name" jdbcType="VARCHAR" property="modifyUserName" />
+		<result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		type_id, type_name, remark, state, create_user_id,
+		create_user_name, create_date, modify_user_id, modify_user_name, modify_date
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_dict_type
+		where type_id = #{typeId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from public.t_sys_dict_type
+		where type_id = #{typeId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TSysDictType">
+		insert into public.t_sys_dict_type (type_id, type_name, remark, state, create_user_id,
+		create_user_name, create_date, modify_user_id, modify_user_name, modify_date, last_modify_date
+		)
+		values (#{typeId,jdbcType=BIGINT}, #{typeName,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, #{createUserId,jdbcType=BIGINT},
+		#{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{modifyUserId,jdbcType=BIGINT},
+		#{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TSysDictType">
+		insert into public.t_sys_dict_type
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="typeName != null">
+				type_name,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id,
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name,
+			</if>
+			<if test="modifyDate != null">
+				modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="typeId != null">
+				#{typeId,jdbcType=BIGINT},
+			</if>
+			<if test="typeName != null">
+				#{typeName,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				#{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				#{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TSysDictType">
+		update public.t_sys_dict_type
+		<set>
+			<if test="typeName != null">
+				type_name = #{typeName,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where type_id = #{typeId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysDictType">
+		update public.t_sys_dict_type
+		set type_name = #{typeName,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		state = #{state,jdbcType=SMALLINT},
+		create_user_id = #{createUserId,jdbcType=BIGINT},
+		create_user_name = #{createUserName,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+		modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+		modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+		where type_id = #{typeId,jdbcType=BIGINT}
+	</update>
+
+	<select id="queryDictTypeList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_dict_type
+		where state &gt; 0
+		<if test="search.typeName != null and search.typeName != ''">
+			and type_name like '%'||#{search.typeName,jdbcType=VARCHAR}||'%'
+		</if>
+		order by create_date desc
+	</select>
+
+	<select id="getDictTypeList" resultMap="BaseResultMap" parameterType="com.samton.platform.pm.bean.entity.TSysDictType">
+		select type_id, type_name
+		from public.t_sys_dict_type
+		where state &gt; 0
+	</select>
+
+</mapper>

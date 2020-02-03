@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.common.dao.TSysProvinceMapper">
+	<resultMap id="BaseResultMap" type="com.samton.platform.common.bean.entity.TSysProvince">
+		<id column="province_id" property="provinceId" jdbcType="INTEGER" />
+		<result column="province_name" property="provinceName" jdbcType="VARCHAR" />
+		<result column="province_abbr" property="provinceAbbr" jdbcType="VARCHAR" />
+		<result column="order_num" property="orderNum" jdbcType="INTEGER" />
+		<result column="area_id" property="areaId" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		province_id, province_name, province_abbr, order_num, area_id
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_province
+		where province_id = #{provinceId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from public.t_sys_province
+		where province_id = #{provinceId,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.samton.platform.common.bean.entity.TSysProvince">
+		insert into public.t_sys_province (province_id, province_name,
+		province_abbr,
+		order_num, area_id)
+		values (#{provinceId,jdbcType=INTEGER}, #{provinceName,jdbcType=VARCHAR},
+		#{provinceAbbr,jdbcType=VARCHAR},
+		#{orderNum,jdbcType=INTEGER}, #{areaId,jdbcType=BIGINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.samton.platform.common.bean.entity.TSysProvince">
+		insert into public.t_sys_province
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="provinceId != null">
+				province_id,
+			</if>
+			<if test="provinceName != null">
+				province_name,
+			</if>
+			<if test="provinceAbbr != null">
+				province_abbr,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+			<if test="areaId != null">
+				area_id,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="provinceId != null">
+				#{provinceId,jdbcType=INTEGER},
+			</if>
+			<if test="provinceName != null">
+				#{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceAbbr != null">
+				#{provinceAbbr,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="areaId != null">
+				#{areaId,jdbcType=BIGINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.common.bean.entity.TSysProvince">
+		update public.t_sys_province
+		<set>
+			<if test="provinceName != null">
+				province_name = #{provinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="provinceAbbr != null">
+				province_abbr = #{provinceAbbr,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="areaId != null">
+				area_id = #{areaId,jdbcType=BIGINT},
+			</if>
+		</set>
+		where province_id = #{provinceId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.common.bean.entity.TSysProvince">
+		update public.t_sys_province
+		set province_name = #{provinceName,jdbcType=VARCHAR},
+		province_abbr = #{provinceAbbr,jdbcType=VARCHAR},
+		order_num = #{orderNum,jdbcType=INTEGER},
+		area_id = #{areaId,jdbcType=BIGINT}
+		where province_id = #{provinceId,jdbcType=INTEGER}
+	</update>
+	<select id="getProvince" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_province
+		order by order_num
+	</select>
+</mapper>

@@ -1,0 +1,155 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>编辑下拉框</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="../../../dialogs/internal.js"></script>
+    <script type="text/javascript" src="../../../../../js/jquery/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+        *{margin:0;padding:0;color: #838383;}
+        table{font-size: 12px;margin: 10px;line-height: 30px}
+        .txt{height:21px;line-height:21px;border:1px solid #d7d7d7;color:black;width: 100%;}
+    </style>
+</head>
+<body>
+	<table width="260px" id="options">
+        <tr>
+            <td><label for="name"> <var id="lang_input_name"></var></label></td>
+            <td><input class="txt" id=name type="text" /></td>
+        </tr>
+        <tr>
+            <td><label for="color"> <var id="lang_input_font_color"></var></label></td>
+            <td><input class="txt" id="color" type="text" readonly="readonly" style="text-align: center;"/></td>
+        </tr>
+        <tr>
+            <td><label for="fontSize"> <var id="lang_input_font_size"></var></label></td>
+            <td><input class="txt" id="fontSize" type="text" style="width: 180px;"/> px</td>
+        </tr>
+  		<tr>
+  			<td align="center">序号</td>
+  			<td align="center">输入下拉菜单项目</td>
+		</tr>
+   		<tr id="add">
+   			<td colspan="2" align="center">
+   				<input type="button" onclick="addOptions();" value="增加" style="color:black;">
+   			</td>
+   		</tr>
+    </table>
+    <script type="text/javascript">
+    var c = 10;
+    for ( var i=1; i<=c; i++ ) {
+        var tr = '<tr><td align="center">'+i+'</td><td align="center"><input id="opt_'+i+'" class="txt opt" type="text"></td></tr>';
+        $("#add").before(tr);
+    }
+    function addOptions() {
+        c ++;
+        var tr = '<tr><td align="center">'+c+'</td><td align="center"><input id="opt_'+c+'" class="txt opt" type="text"></td></tr>';
+        $("#add").before(tr);
+    }
+    var me = editor,
+    doc = me.document,
+    cp = $G("color"),
+    bkcolor = "";
+    var input = me._select;
+    var name = "";
+	if ( input ) {
+		$G("name").value = input.getAttribute("title");
+		$G("color").value = input.getAttribute("color");
+		domUtils.setStyle($G("color"), "background-color", $G("color").value);
+		$G("fontSize").value = input.getAttribute("fontSize");
+
+		$(input).find("option").each(function(i ,e){
+			if ( $("#opt_"+(i+1)).length==0 ) {
+				c = i+1;
+				var tr = '<tr><td align="center">'+c+'</td><td align="center"><input id="opt_'+c+'" class="txt opt" type="text"></td></tr>';
+		        $("#add").before(tr);
+			}
+			$("#opt_"+(i+1)).val($(this).text());
+		});
+		name = input.getAttribute("name");
+	}
+	var popup = new UE.ui.Popup({
+	    content:new UE.ui.ColorPicker({
+	        noColorText:me.getLang("clearColor"),
+	        editor:me,
+	        onpickcolor:function (t, color) {
+	            cp.value = color;
+	            domUtils.setStyle(cp, "background-color", color);
+	            bkcolor = color;
+	            UE.ui.Popup.postHide();
+	        },
+	        onpicknocolor:function (t, color) {
+	        	cp.value = "";
+	            domUtils.setStyle(cp, "background-color", "transparent");
+	            bkcolor = "";
+	            UE.ui.Popup.postHide();
+	        }
+	    }),
+	    editor:me,
+	    onhide:function () {
+	    }
+	});
+	domUtils.on(cp, "click", function () {
+	    popup.showAnchor(this);
+	});
+	domUtils.on(document, 'mousedown', function (evt) {
+	    var el = evt.target || evt.srcElement;
+	    UE.ui.Popup.postHide(el);
+	});
+	domUtils.on(window, 'scroll', function () {
+	    UE.ui.Popup.postHide();
+	});
+	dialog.onok = handleDialogOk;
+	dialog.oncancel = function(){
+		editor._select = null;
+	}
+	function handleDialogOk() {
+		var data = {};
+		data.name = $G("name").value;
+		if ( data.name=='' ) {
+			alert("请输入控件名称！");
+			return false;
+		}
+		data.color = $G("color").value;
+		data.size = $G("fontSize").value;
+		var newInput;
+		if ( input ) {
+			newInput = $(input);
+		} else {
+			newInput = $("<select>");
+		}
+		newInput.attr({
+			"title":data.name,
+			"color":data.color,
+			"fontSize":data.size
+		});
+		newInput.css({
+			"color":data.color,
+			"font-size":data.size
+		});
+
+		newInput.empty();
+		$("#options input.opt").each(function(i, e){
+			if ( e.value != '' ) {
+				newInput.append("<option value='"+e.value+"'>"+e.value+"</option>");
+			}
+		});
+
+		if ( input ) {
+			//编辑
+		} else {
+			//插入
+			me._control_counter = me._control_counter + 1;
+			name = "DATA_"+me._control_counter;
+			newInput.attr("name", name);
+			var span = $("<span name='form-control' style='padding:2px;'></span>");
+			span.append(newInput);
+			//newInput.wrap("<span name='form-control'></span>");
+			
+            editor.execCommand("inserthtml", span.wrap("<div></div>").parent().html());
+		}
+		editor._select = null;
+	}
+    </script>
+</body>
+</html>

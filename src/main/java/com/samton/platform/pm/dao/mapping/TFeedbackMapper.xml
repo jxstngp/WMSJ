@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.pm.dao.TFeedbackMapper" >
+  <resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TFeedback" >
+    <id column="feedback_id" property="feedbackId" jdbcType="INTEGER" />
+    <result column="feedback" property="feedback" jdbcType="VARCHAR" />
+    <result column="feedback_date" property="feedbackDate" jdbcType="TIMESTAMP" />
+    <result column="cust_id" property="custId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    feedback_id, feedback, feedback_date, cust_id, create_date, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_feedback
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TFeedback" >
+    insert into public.t_feedback (feedback_id, feedback, feedback_date, 
+      cust_id, create_date, modify_date
+      )
+    values (#{feedbackId,jdbcType=INTEGER}, #{feedback,jdbcType=VARCHAR}, #{feedbackDate,jdbcType=TIMESTAMP}, 
+      #{custId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{modifyDate,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TFeedback" >
+    insert into public.t_feedback
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null" >
+        feedback_id,
+      </if>
+      <if test="feedback != null" >
+        feedback,
+      </if>
+      <if test="feedbackDate != null" >
+        feedback_date,
+      </if>
+      <if test="custId != null" >
+        cust_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="feedbackId != null" >
+        #{feedbackId,jdbcType=INTEGER},
+      </if>
+      <if test="feedback != null" >
+        #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackDate != null" >
+        #{feedbackDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="custId != null" >
+        #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TFeedback" >
+    update public.t_feedback
+    <set >
+      <if test="feedback != null" >
+        feedback = #{feedback,jdbcType=VARCHAR},
+      </if>
+      <if test="feedbackDate != null" >
+        feedback_date = #{feedbackDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="custId != null" >
+        cust_id = #{custId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TFeedback" >
+    update public.t_feedback
+    set feedback = #{feedback,jdbcType=VARCHAR},
+      feedback_date = #{feedbackDate,jdbcType=TIMESTAMP},
+      cust_id = #{custId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页查询where条件 -->
+  <sql id="queryPageList_where">
+    <if test="search != null">
+      <if test="search.custCode != null and search.custCode != ''">
+        and tc.cust_code like '%'||#{search.custCode,jdbcType=VARCHAR}||'%'
+      </if>
+      <if test="search.wechatName != null and search.wechatName != ''">
+        and tc.wechat_name like '%'||#{search.wechatName,jdbcType=VARCHAR}||'%'
+      </if>
+    </if>
+  </sql>
+  <!-- 分页查询 -->
+  <select id="queryPageList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultType="com.samton.platform.pm.bean.vo.TFeedbackVo">
+    select
+
+    tc.cust_code,tc.wechat_name,tc.wechat_code,tc.mobile,tf.feedback,tf.feedback_date,tf.feedback_id,tc.cust_id
+    from t_feedback tf
+    left join t_customer tc on tf.cust_id = tc.cust_id
+    <where>
+      <include refid="queryPageList_where" />
+    </where>
+    order by tf.modify_date DESC
+  </select>
+
+  <!-- 页面导出 -->
+  <select id="exportPageList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultType="java.util.Map">
+    select
+    tc.cust_code,tc.wechat_name,tc.wechat_code,tc.mobile,tf.feedback,tf.feedback_date,tf.feedback_id,tc.cust_id
+    from t_feedback tf
+    left join t_customer tc on tf.cust_id = tc.cust_id
+    <where>
+      <include refid="queryPageList_where" />
+    </where>
+    order by tf.modify_date DESC
+  </select>
+  <select id="selectFeedbackById" parameterType="java.lang.Integer" resultType="com.samton.platform.pm.bean.vo.TFeedbackVo">
+    select
+    tc.cust_code,tc.wechat_name,tc.wechat_code,tc.mobile,tf.feedback,tf.feedback_date,tf.feedback_id,tc.cust_id
+    from t_feedback tf
+    left join t_customer tc on tf.cust_id = tc.cust_id
+    where tf.feedback_id = #{feedbackId,jdbcType=INTEGER}
+  </select>
+</mapper>

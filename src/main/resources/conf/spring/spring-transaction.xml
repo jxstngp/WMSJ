@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+       
+	<bean id="dynamicDataSourceAop" class="com.samton.platform.framework.db.ds.DynamicDataSourceAop" >
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+		
+    <aop:config expose-proxy="true">
+        <aop:pointcut id="txPointcut" expression="execution(* com.samton.*.*.service..*.*(..)) || execution(* com.samton.*.*.*.service..*.*(..))" />
+        <aop:advisor pointcut-ref="txPointcut" advice-ref="txAdvice" />
+        <aop:aspect order="-2147483648" ref="dynamicDataSourceAop">
+           <aop:around pointcut-ref="txPointcut" method="doAroundMethod"/>
+        </aop:aspect>
+    </aop:config>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <tx:advice id="txAdvice" transaction-manager="txManager">
+        <tx:attributes>
+            <tx:method name="load*" read-only="true" />
+            <tx:method name="get*" read-only="true" />
+            <tx:method name="find*" read-only="true" />
+            <tx:method name="select*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="search*" read-only="true"/>
+            <tx:method name="count*" read-only="true" />
+            <tx:method name="*"  propagation="REQUIRED"  rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+	
+</beans>

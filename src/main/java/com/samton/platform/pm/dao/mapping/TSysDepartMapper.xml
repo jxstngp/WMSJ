@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.pm.dao.TSysDepartMapper">
+	<resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TSysDepart">
+		<id column="depart_id" property="departId" jdbcType="BIGINT" />
+		<result column="depart_name" property="departName" jdbcType="VARCHAR" />
+		<result column="parent_depart_id" property="parentDepartId" jdbcType="INTEGER" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="manager_user_id" property="managerUserId" jdbcType="INTEGER" />
+		<result column="state" property="state" jdbcType="SMALLINT" />
+		<result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+		<result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_user_id" property="modifyUserId" jdbcType="BIGINT" />
+		<result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="parent_depart_name" property="parentDepartName" jdbcType="VARCHAR" />
+		<result column="manager_user_name" property="managerUserNmae" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap id="DepartSelectMap" type="com.samton.platform.common.bean.entity.DepartSelectVO">
+		<id column="depart_id" property="departId" jdbcType="BIGINT" />
+		<result column="depart_name" property="departName" jdbcType="VARCHAR" />
+	</resultMap>
+		
+	<sql id="Base_Column_List">
+		depart_id, depart_name, parent_depart_id, remark, manager_user_id, state,
+		create_user_id, create_user_name, create_date, modify_user_id, modify_user_name,modify_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_depart
+		where depart_id = #{departId,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimary" resultMap="BaseResultMap" parameterType="com.samton.platform.pm.bean.entity.TSysDepart">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_depart
+		where 1=1 and state != 0
+		<if test="departName != null and departName != ''">
+			and depart_name = #{departName,jdbcType=VARCHAR}
+		</if>
+		<if test="departId != null and departId != ''">
+			and depart_id != #{departId,jdbcType=VARCHAR}
+		</if>
+	</select>
+	<select id="getPlatformPmDeparts" resultMap="BaseResultMap" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination">
+		select
+		<include refid="Base_Column_List" />
+		,case when pm.parent_depart_id=0 then '顶级部门' else (select depart_name
+		from t_sys_depart t1 where t1.depart_id =pm.parent_depart_id) end
+		parent_depart_name ,
+		(select user_name from t_sys_pm_user where user_id= pm.manager_user_id )
+		manager_user_name
+		from public.t_sys_depart pm
+		where pm.state=1
+		<if test="search.departName != null and search.departName != ''">
+			and pm.depart_name like'%'||#{search.departName,jdbcType=VARCHAR}||'%'
+		</if>
+		<if test="search.parentDepartId != null and search.parentDepartId !=''">
+			and parent_depart_id = #{search.parentDepartId,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="selectPlatformPmDeparts" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />,
+		case when pm.parent_depart_id=0 then '顶级部门' else (select depart_name from t_sys_depart t1 where t1.depart_id =pm.parent_depart_id) end parent_depart_name ,
+		(select user_name from t_sys_pm_user where user_id= pm.manager_user_id ) manager_user_name
+		from t_sys_depart pm
+		where pm.state=1
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from public.t_sys_depart
+		where depart_id = #{departId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TSysDepart">
+		insert into public.t_sys_depart (depart_id, depart_name,
+		parent_depart_id,
+		remark, manager_user_id,
+		state, create_user_id,
+		create_user_name, create_date, modify_user_id,
+		modify_user_name, modify_date
+		)
+		values (#{departId,jdbcType=BIGINT}, #{departName,jdbcType=VARCHAR},
+		#{parentDepartId,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR}, #{managerUserId,jdbcType=INTEGER}
+		#{state,jdbcType=SMALLINT},
+		#{createUserId,jdbcType=BIGINT},
+		#{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=BIGINT},
+		#{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TSysDepart">
+		insert into public.t_sys_depart
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="departId != null">
+				depart_id,
+			</if>
+			<if test="departName != null">
+				depart_name,
+			</if>
+			<if test="parentDepartId != null">
+				parent_depart_id,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="managerUserId != null">
+				manager_user_id,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id,
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name,
+			</if>
+			<if test="modifyDate != null">
+				modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="departId != null">
+				#{departId,jdbcType=BIGINT},
+			</if>
+			<if test="departName != null">
+				#{departName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentDepartId != null">
+				#{parentDepartId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="managerUserId != null">
+				#{managerUserId,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				#{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				#{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TSysDepart">
+		update public.t_sys_depart
+		<set>
+			<if test="departName != null">
+				depart_name = #{departName,jdbcType=VARCHAR},
+			</if>
+			<if test="parentDepartId != null">
+				parent_depart_id = #{parentDepartId,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="managerUserId != null">
+				manager_user_id = #{managerUserId,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where depart_id = #{departId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysDepart">
+		update public.t_sys_depart
+		set depart_name = #{departName,jdbcType=VARCHAR},
+		parent_depart_id = #{parentDepartId,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR},
+		manager_user_id = #{managerUserId,jdbcType=INTEGER},
+		state = #{state,jdbcType=SMALLINT},
+		create_user_id = #{createUserId,jdbcType=BIGINT},
+		create_user_name = #{createUserName,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+		modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+		modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+		where depart_id = #{departId,jdbcType=BIGINT}
+	</update>
+	<select id="exportDepartList" resultType="java.util.Map" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination">
+		select
+		<include refid="Base_Column_List" />,
+		case when pm.parent_depart_id=0 then '顶级部门' else (select depart_name from t_sys_depart t1 where t1.depart_id =pm.parent_depart_id) end parent_depart_name ,
+		(select user_name from t_sys_pm_user where user_id= pm.manager_user_id ) manager_user_name
+		from public.t_sys_depart pm
+		where pm.state=1
+		<if test="search.departName != null and search.departName != ''">
+			and pm.depart_name like '%'||#{search.departName,jdbcType=VARCHAR}||'%'
+		</if>
+		<if test="search.parentDepartId != null and search.parentDepartId !=''">
+			and parent_depart_id = #{search.parentDepartId,jdbcType=VARCHAR}
+		</if>
+		order by create_date desc
+	</select>
+	
+	<select id="selectDepartListForSelect" resultMap="DepartSelectMap">
+		select depart_id, depart_name
+		from t_sys_depart
+		where state = 1
+	</select>	
+</mapper>

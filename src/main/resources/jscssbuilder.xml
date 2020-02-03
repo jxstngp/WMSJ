@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<project name="Squirrel" default="compress" basedir=".">
+    <description>Squirrel Build</description>
+    <!--属性的定义-->
+    <property name="web.dir" location="../../main/webapp/" />
+    <property name="yuicompressor.jar" location="${web.dir}/WEB-INF/lib/yuicompressor.jar" />
+    <property name="css.dev.dir" location="${web.dir}/resources/css/" />
+    <property name="css.bulid.dir" location="${web.dir}/resources/css/" />
+    <property name="css.merge.name" value="all.css" />
+    <property name="css.bulid.name" value="all-min.css" />
+
+    <property name="js.dev.dir" location="${web.dir}/resources/" />
+    <property name="js.bulid.dir" location="${web.dir}/resources/" />
+    <property name="js.merge.name" value="script/total/all.js" />
+    <property name="js.bulid.name" value="script/total/all-min.js" />	
+	<property name="charset" value="utf-8"/>
+    
+    <target name="compress" depends="css.compress,js.compress" />
+
+    <!-- CSS Merge -->
+    <target name="css.merge">
+        <echo message="开始合并CSS" />
+        <concat destfile="${css.dev.dir}/${css.merge.name}">
+        	<path path="${css.dev.dir}/basic.css" /> 
+        	<path path="${css.dev.dir}/register.css" /> 
+        	<path path="${css.dev.dir}/main.css" /> 
+        	<path path="${css.dev.dir}/plug-in.css" /> 
+        	<path path="${css.dev.dir}/panel.css" /> 
+        	<path path="${css.dev.dir}/animations.css" /> 
+        	<path path="${css.dev.dir}/systems.css" /> 
+    		<path path="${css.dev.dir}/upload.css" /> 
+    		<path path="${css.dev.dir}/detail.css" /> 
+        	<path path="${css.dev.dir}/skin/default.css" /> 
+        </concat>
+    </target>
+
+    <!-- CSS Compress -->
+    <target name="css.compress" depends="css.merge">
+        <!-- 删除 Bulid 下的 css -->
+        <delete>
+            <fileset dir="${css.bulid.dir}" includes="${css.bulid.name}" />
+        </delete>
+    	<echo message="开始压缩CSS" />
+        <apply executable="java" parallel="false" verbose="true" dest="${css.bulid.dir}">
+            <!-- 引入 css 文件并执行 yuicompressor 压缩 -->
+            <fileset dir="${css.dev.dir}" includes="${css.merge.name}" />
+            <arg line="-jar" />
+            <arg path="${yuicompressor.jar}" />
+            <arg line="--charset ${charset}" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="*.css" to="${css.bulid.name}" />
+        </apply>
+    	 <!-- 删除合并的临时 css -->
+    	<!--
+        <delete>
+            <fileset dir="${css.dev.dir}" includes="${css.merge.name}" />
+        </delete>
+    	<echo message="删除合并的临时 css" />
+    	-->
+    </target>
+	
+	
+	<target name="js.merge">
+		<echo message="开始合并js" />
+        <concat destfile="${js.dev.dir}/${js.merge.name}"  encoding="${charset}" outputencoding="${charset}">
+        	<path path="${js.dev.dir}/script/common/util/md5.js" />  
+        	<path path="${js.dev.dir}/script/common/util/base64.js" />  
+        	<path path="${js.dev.dir}/script/common/util/datetool.js" />
+        	<path path="${js.dev.dir}/script/common/util/checktool.js" /> 
+        	<path path="${js.dev.dir}/script/common/sysMod.js" />  
+        	<path path="${js.dev.dir}/script/common/sysplugMod.js" />  
+        	<path path="${js.dev.dir}/script/common/sysplugCtrl.js" />  
+        	<path path="${js.dev.dir}/script/common/sysService.js" />  
+        	<path path="${js.dev.dir}/script/common/sysDirective.js" />  
+        	<path path="${js.dev.dir}/script/common/sysFilter.js" />
+        	<path path="${js.dev.dir}/script/workbench/workbenchMod.js" />  
+        	<path path="${js.dev.dir}/script/workbench/workbenchCtrl.js" />  
+        	<path path="${js.dev.dir}/script/sys/sysUserMod.js" />  
+        	<path path="${js.dev.dir}/script/sys/sysUserCtrl.js" />
+        	<path path="${js.dev.dir}/script/third/thirdMod.js" />  
+        	<path path="${js.dev.dir}/script/third/thirdCtrl.js" />    
+        	<path path="${js.dev.dir}/script/activity/activityMod.js" />
+        	<path path="${js.dev.dir}/script/activity/activityCtrl.js" /> 
+        	<path path="${js.dev.dir}/script/user/userMod.js" /> 
+        	<path path="${js.dev.dir}/script/user/userCtrl.js" />  
+        	<path path="${js.dev.dir}/script/workbench/workbenchMod.js" />  
+        	<path path="${js.dev.dir}/script/workbench/workbenchCtrl.js" />  
+        	<path path="${js.dev.dir}/script/market/marketMod.js" />  
+        	<path path="${js.dev.dir}/script/market/marketService.js" />
+        	<path path="${js.dev.dir}/script/market/marketCtrl.js" />  
+        	<path path="${js.dev.dir}/script/common/sysClickDirective.js" />  
+        	<path path="${js.dev.dir}/script/clue/clueMod.js" />  
+        	<path path="${js.dev.dir}/script/clue/clueService.js" />
+           	<path path="${js.dev.dir}/script/clue/clueCtrl.js" />  
+        	<path path="${js.dev.dir}/script/task/taskMod.js" />  
+        	<path path="${js.dev.dir}/script/task/taskService.js" />  
+        	<path path="${js.dev.dir}/script/task/taskCtrl.js" />
+        	<path path="${js.dev.dir}/script/task/taskDirective.js" />  
+        	<path path="${js.dev.dir}/script/schedule/scheduleMod.js" />  
+        	<path path="${js.dev.dir}/script/schedule/scheduleService.js" />  
+        	<path path="${js.dev.dir}/script/schedule/scheduleCtrl.js" />
+        	<path path="${js.dev.dir}/script/schedule/scheduleDirective.js" />
+        	<path path="${js.dev.dir}/script/dashboard/dashboardMod.js" />  
+        	<path path="${js.dev.dir}/script/dashboard/dashboardService.js" />  
+        	<path path="${js.dev.dir}/script/dashboard/dashboardCtrl.js" />  
+        	<path path="${js.dev.dir}/script/dashboard/dashboardDirective.js" />
+        	<path path="${js.dev.dir}/script/errandCheckin/errandCheckinMod.js" />
+        	<path path="${js.dev.dir}/script/errandCheckin/errandCheckinCtrl.js" />
+        	<path path="${js.dev.dir}/script/sales/salesMod.js" />
+        	<path path="${js.dev.dir}/script/sales/service/salesServices.js" />
+        	<path path="${js.dev.dir}/script/sales/controller/salesOpporCtrl.js" />  
+        	<path path="${js.dev.dir}/script/sales/controller/salesPlanCtrl.js" />  
+        	<path path="${js.dev.dir}/script/product/productMod.js" />  
+        	<path path="${js.dev.dir}/script/product/productServices.js" />
+        	<path path="${js.dev.dir}/script/product/productCtrl.js" />
+        	<path path="${js.dev.dir}/script/customer/customerMod.js" />
+        	<path path="${js.dev.dir}/script/customer/customerCtrl.js" />  
+        	<path path="${js.dev.dir}/script/customer/customerClick.js" />
+        	<path path="${js.dev.dir}/script/customerPool/customerPoolMod.js" />
+        	<path path="${js.dev.dir}/script/customerPool/customerPoolCtrl.js" />
+        	<path path="${js.dev.dir}/script/contact/contactMod.js" />  
+        	<path path="${js.dev.dir}/script/contact/contactCtrl.js" />
+        	<path path="${js.dev.dir}/script/upload/uploadMod.js" />
+        	<path path="${js.dev.dir}/script/upload/uploadCtrl.js" />
+        	<path path="${js.dev.dir}/script/knowledge/knowledgeMod.js" />  
+        	<path path="${js.dev.dir}/script/knowledge/knowledgeCtrl.js" />  
+        	<path path="${js.dev.dir}/script/knowledge/knowledgeDirective.js" />  
+        	<path path="${js.dev.dir}/script/notice/noticeMod.js" />
+        	<path path="${js.dev.dir}/script/notice/noticeService.js" />
+        	<path path="${js.dev.dir}/script/notice/noticeDirective.js" />
+        	<path path="${js.dev.dir}/script/notice/noticeCtrl.js" />  
+        	<path path="${js.dev.dir}/script/app.js" />  
+        	<path path="${js.dev.dir}/script/router.js" />  
+        	<path path="${js.dev.dir}/script/remind/remindMod.js" />
+        	<path path="${js.dev.dir}/script/remind/remindCtrl.js" />
+        	<path path="${js.dev.dir}/script/report/reportMod.js" />
+        	<path path="${js.dev.dir}/script/report/reportCtrl.js" />
+        	<path path="${js.dev.dir}/script/report/reportStatCtrl.js" />
+        	<path path="${js.dev.dir}/script/relation/relationMod.js" />
+        	<path path="${js.dev.dir}/script/relation/relationCtrl.js" />  
+        	<path path="${js.dev.dir}/script/relation/relationResponsibleCtrl.js" />  
+        	<path path="${js.dev.dir}/script/address/addressMod.js" />  
+        	<path path="${js.dev.dir}/script/address/addressCtrl.js" />
+        	<path path="${js.dev.dir}/script/sys/callScreenMod.js" />
+        	<path path="${js.dev.dir}/script/sys/callScreenCtrl.js" />
+        	<path path="${js.dev.dir}/script/eps/epsMod.js" />
+        	<path path="${js.dev.dir}/script/eps/epsCtrl.js" />  
+        	<path path="${js.dev.dir}/script/eps/epsCallerCtrl.js" />
+        	<path path="${js.dev.dir}/script/eps/epsRecommendCtrl.js" />
+        	<path path="${js.dev.dir}/script/eps/additionalFunctionCtrl.js" />  
+        	<path path="${js.dev.dir}/script/rely/searchMod.js" />
+        	<path path="${js.dev.dir}/script/rely/searchCtrl.js" />
+        	<path path="${js.dev.dir}/script/sales/salesTargetMod.js" />
+        	<path path="${js.dev.dir}/script/sales/controller/salesTargetCtrl.js" />
+        	<path path="${js.dev.dir}/script/sales/salesTargetFinishMod.js" />  
+        	<path path="${js.dev.dir}/script/sales/controller/salesTargetFinishCtrl.js" />
+        	<path path="${js.dev.dir}/script/performance/mod/performanceCustomerMod.js" />
+        	<path path="${js.dev.dir}/script/performance/controller/performanceCustomerCtrl.js" />
+        	<path path="${js.dev.dir}/script/performance/mod/performanceTargetMod.js" />
+        	<path path="${js.dev.dir}/script/performance/controller/performanceTargetCtrl.js" />
+        	<path path="${js.dev.dir}/script/performance/mod/performanceTeamMod.js" />
+        	<path path="${js.dev.dir}/script/performance/controller/performanceTeamCtrl.js" />
+        	<path path="${js.dev.dir}/script/loginLog/loginLogMod.js" />
+        	<path path="${js.dev.dir}/script/loginLog/loginLogCtrl.js" />
+        	<path path="${js.dev.dir}/script/error/errorMod.js" />
+        	<path path="${js.dev.dir}/script/error/errorCtrl.js" />
+        	
+        	<path path="${js.dev.dir}/scriptbg/bgmain/bgmainMod.js" />  
+        	<path path="${js.dev.dir}/scriptbg/bgmain/bgmainCtrl.js" />
+        	<path path="${js.dev.dir}/scriptbg/businessObj/businessObjMod.js" />
+        	<path path="${js.dev.dir}/scriptbg/businessObj/businessObjCtrl.js" />
+        	<path path="${js.dev.dir}/scriptbg/dict/dictMod.js" />  
+        	<path path="${js.dev.dir}/scriptbg/dict/dictCtrl.js" />
+        	<path path="${js.dev.dir}/scriptbg/systemUser/departMod.js" />
+        	<path path="${js.dev.dir}/scriptbg/systemUser/departCtrl.js" />
+        	<path path="${js.dev.dir}/scriptbg/systemUser/roleMod.js" />  
+        	<path path="${js.dev.dir}/scriptbg/systemUser/roleCtrl.js" />
+        	<path path="${js.dev.dir}/scriptbg/systemUser/roleService.js" />
+        	<path path="${js.dev.dir}/scriptbg/enterprise/basicMod.js" />
+        	<path path="${js.dev.dir}/scriptbg/enterprise/basicCtrl.js" />
+        	<path path="${js.dev.dir}/scriptbg/workorder/workorderMod.js" />
+        	<path path="${js.dev.dir}/scriptbg/workorder/workorderCtrl.js" />
+        	<path path="${js.dev.dir}/scriptbg/enterprise/joinCompanyMod.js" />
+        	<path path="${js.dev.dir}/scriptbg/enterprise/joinCompanyCtrl.js" />
+        </concat>
+	</target>
+	
+	<target name="js.compress" depends="js.merge">
+		<!-- 删除 Bulid 下的 js -->
+        <delete>
+            <fileset dir="${js.bulid.dir}" includes="${js.bulid.name}" />
+        </delete>
+    	<echo message="开始压缩js" />
+        <apply executable="java" parallel="false" verbose="true" dest="${js.bulid.dir}">
+            <!-- 引入 js 文件并执行 yuicompressor 压缩 -->
+            <fileset dir="${js.dev.dir}" includes="${js.merge.name}" />
+            <arg line="-jar" />
+            <arg path="${yuicompressor.jar}" />
+        	<arg line="--nomunge --charset ${charset}" />
+            <arg value="-o" />
+            <targetfile />
+            <mapper type="glob" from="*.js" to="${js.bulid.name}" />
+        </apply>
+	</target>
+</project>

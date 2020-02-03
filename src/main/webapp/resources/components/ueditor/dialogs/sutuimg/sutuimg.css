@@ -1,0 +1,66 @@
+h1, h2, h3, h4, h5, h6 {
+    font-size: 12px;
+    font-weight: normal;
+}
+address, cite, code, em, th, i {
+    font-weight: normal;
+    font-style: normal;
+}
+body, div, p, span, h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dt, dd, pre, form, tr, td, th, table {
+    border: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+* {
+    box-sizing: border-box;
+}
+/* ¸´Ñ¡¿òÑùÊ½ */
+.checkbox{ display:inline-block; height:15px; line-height:16px; background:url(checkbox.png) no-repeat 0px 0px; font-size:0; cursor:pointer;}
+.checkbox em{ padding-left:19px; font-size:12px; color:#4c4d4d; vertical-align:top;}
+.checkbox.checked{ background-position:0px -25px;}
+.select_fromspace{ margin:10px; position: relative;}
+.selectimg_left{ width:200px; height:300px;  position: absolute;}
+.menu_tree{border:1px solid #cdd7df;}
+.menu_tree h4{padding: 5px 10px; background-color:#f4f7f9; border-bottom:1px solid #cdd7df;}
+.picture_info_table{ width:200px; margin-top:10px; border: 1px solid #cdd7df;}
+.picture_info_table th{ text-align: center;}
+.picture_info_table th,.picture_info_table td{ border: 1px solid #cdd7df; padding:8px;}
+.picutre_form .picture_input{background-color: #fff; width:90px; height: 28px; margin:0 10px; border: 1px solid #d3d7dd; border-radius: 4px; padding: 3px 8px; font-size: 12px; color: #000;}
+.right_body{ margin-left:210px;}
+.picture_search{ overflow: hidden;}
+.right_body .name_label{ float: left; width:40px; line-height:28px;}
+.right_body .name_input{ float: left;}
+.right_body .name_input input{width:330px; }
+.right_body .name_btn{ float:left;}
+.right_body .name_btn button{ height:28px; line-height:26px; margin-right:7px; padding:0px 10px; border:1px solid transparent; border-radius:5px; cursor:pointer; font-size:12px; background-color:#2691ee; color:#fff;}
+.category_nav{ margin-top:10px; background-color:#eee; padding:0 10px; line-height: 30px;}
+.category_nav span{ color:#f00;}
+.select_img_list{ max-height: 230px; overflow: auto;}
+.select_img_list ul{ overflow: hidden;}
+.select_img_list ul li{ float: left; width:120px; min-height:150px; margin-top:10px; margin-right:20px; margin-bottom:10px;}
+.select_img_list ul li .picture_con{ margin-top:8px;}
+.select_img_list ul li .picture_con .picture_in{  margin-top:5px; background-color:#fff; border:1px solid #d4d7dd; padding:2px; width:120px; height:120px; }
+.select_img_list ul li img{ display: block; margin:2px; max-width:114px; max-height:114px;}
+.select_img_list .picture_info{ display: block; color:#222; padding:5px; font-size:12px; line-height:16px;}
+.select_img_list .picture_info h5{ white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+.select_img_list .picture_info em{ color:#999;float: right;}
+.select_img_list ul li.upload_pictures{ margin-top:35px; background-color:#f4f7f9; border: 1px solid #d4d7dd;}
+.select_img_list ul li.upload_pictures a{ display: block; width: 100%; line-height:148px; color:#87888b; font-size:14px; text-align: center;}
+.select_img_list ul li.upload_pictures a:hover{ background-color:#eff3f5;}
+.select_img_list ul li .picture_con .checkbox {
+    height: auto;
+}
+.picutre_form .pictures_list{overflow: hidden; padding:10px; min-height: 80px; background-color:#eee;}
+.picutre_form .pictures_list dl{ margin-top:-10px;}
+.picutre_form .pictures_list dd{ position: relative; float: left; display: inline-block; width:59px; height:59px; margin-top: 10px; border:1px solid #d4d7dd; background-color:#fff; margin-right:15px;}
+.picutre_form .pictures_list .pictures_in{ width:55px; height:55px; margin:1px;}
+.picutre_form .pictures_list dd img{ width:auto; height:auto; max-width: 100%; max-height: 100%;}
+.picutre_form .pictures_list .pictures_del{ position: absolute; display: block; right:-5px; top:-5px; width:16px; height:16px; line-height:14px; background-color:#666; color:#fff; border-radius:8px; text-align: center; font-size:12px; font-family: "arial black"; font-weight: bold; cursor: pointer;}
+.pagination{ float:right; height:40px; margin-right:10px;}
+.pagination li{float:left; margin-top:10px;}
+.pagination a{display: block; height: 28px; line-height: 28px; padding: 0px 8px; border: 1px solid #d3d7dd; font-size: 12px; color: #666; cursor: pointer; border-radius: 3px; margin-left: 5px;}
+.pagination a select{ background-color:#fff ;}
+.pagination a:hover{ background-color:#5ea0da; color:#fff; border-color:#5ea0da;}
+
+.disabled{ background-color: #eee !important; opacity: 1;}
+.select_img_page{ overflow:hidden; height:40px; margin-bottom:10px;}

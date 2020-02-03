@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>富文本编辑器</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="../../../dialogs/internal.js"></script>
+    <script type="text/javascript" src="../../../../../js/jquery/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+        *{margin:0;padding:0;color: #838383;}
+        table{font-size: 12px;margin: 10px;line-height: 30px}
+        .txt{height:21px;line-height:21px;border:1px solid #d7d7d7;color:black;width: 100%;}
+    </style>
+</head>
+<body>
+	<table width="260px" id="options">
+        <tr>
+            <td><label for="name"> <var id="lang_input_name"></var></label></td>
+            <td><input class="txt" id="name" type="text" /></td>
+        </tr>
+        <tr>
+            <td><label for="width"> <var id="lang_input_width_val"></var></label></td>
+            <td><input class="txt" id="width" type="text" /></td>
+        </tr>
+        <tr>
+            <td><label for="height"> <var id="lang_input_height_val"></var></label></td>
+            <td><input class="txt" id="height" type="text" /></td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+    var me = editor,
+    doc = me.document;
+    var input = me._htmleditor;
+    var name = "";
+	if ( input ) {
+		$G("name").value = input.getAttribute("title");
+		$G("width").value = input.getAttribute("width");
+		$G("height").value = input.getAttribute("height");
+		name = input.getAttribute("name");
+	}
+	dialog.onok = handleDialogOk;
+	dialog.oncancel = function(){
+		editor._htmleditor = null;
+	}
+	function handleDialogOk() {
+		var data = {};
+		data.name = $G("name").value;
+		if ( data.name=='' ) {
+			alert("请输入控件名称！");
+			return false;
+		}
+		data.width = $("#width").val();
+		data.height = $("#height").val();
+		var newInput;
+		if ( input ) {
+			newInput = $(input);
+		} else {
+			newInput = $("<textarea>");
+		}
+		newInput.attr({
+			"title":data.name,
+			"class":"htmleditor",
+			"width":data.width,
+			"height":data.height
+		});
+		newInput.css({
+			"width":data.width,
+			"height":data.height
+		});
+		newInput.text(data.name+"{富文本编辑器}");
+		if ( input ) {
+		} else {
+			//插入
+			me._control_counter = me._control_counter + 1;
+			name = "DATA_"+me._control_counter;
+			newInput.attr("name", name);
+			
+            editor.execCommand("inserthtml", newInput.wrap("<div></div>").parent().html());
+		}
+		editor._htmleditor = null;
+	}
+    </script>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        		   http://www.springframework.org/schema/beans/spring-beans.xsd  
+                         		   http://www.springframework.org/schema/aop 
+                        		   http://www.springframework.org/schema/aop/spring-aop.xsd">
+                        
+    <!--spring aop配置 -->
+    <aop:aspectj-autoproxy proxy-target-class="true" />
+<!--     <import resource="spring-transaction.xml" />spring aop事务控制 -->
+    
+    <!-- 重复提交 -->
+    <!-- 
+    <aop:config expose-proxy="true">
+        <aop:pointcut id="ctrlPt" expression="execution(* com.samton.*.*.controller..*.*(..))" />
+        <aop:aspect  ref="resubmitCheckAop" order="1" >
+           <aop:around pointcut-ref="ctrlPt" method="resubmitIntercept"/>
+        </aop:aspect>
+    </aop:config>
+     -->
+    
+    <!-- 日志记录 -->
+    <aop:config expose-proxy="true">
+        <aop:pointcut id="ctrlPt" expression="execution(* com.samton.*.*.controller..*.*(..)) || execution(* com.samton.*.*.*.controller..*.*(..))" />
+        <aop:aspect  ref="accessLogAop" order="2" >
+           <aop:around pointcut-ref="ctrlPt" method="recordLog"/>
+        </aop:aspect>
+    </aop:config>
+    
+</beans>

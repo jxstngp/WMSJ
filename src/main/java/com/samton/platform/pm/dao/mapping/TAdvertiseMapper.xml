@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.pm.dao.TAdvertiseMapper" >
+  <resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TAdvertise" >
+    <id column="advertise_id" property="advertiseId" jdbcType="INTEGER" />
+    <result column="position" property="position" jdbcType="SMALLINT" />
+    <result column="advertise_img" property="advertiseImg" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_forbid" property="isForbid" jdbcType="SMALLINT" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="BIGINT" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    advertise_id, position, advertise_img, link, remark, is_forbid, create_user_id, create_date, 
+    modify_user_id, modify_date
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from public.t_advertise
+    where advertise_id = #{advertiseId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from public.t_advertise
+    where advertise_id = #{advertiseId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TAdvertise" >
+    insert into public.t_advertise (advertise_id, position, advertise_img, 
+      link, remark, is_forbid, 
+      create_user_id, create_date, modify_user_id, 
+      modify_date)
+    values (#{advertiseId,jdbcType=INTEGER}, #{position,jdbcType=SMALLINT}, #{advertiseImg,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{isForbid,jdbcType=SMALLINT}, 
+      #{createUserId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, #{modifyUserId,jdbcType=BIGINT}, 
+      #{modifyDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TAdvertise" >
+    insert into public.t_advertise
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="advertiseId != null" >
+        advertise_id,
+      </if>
+      <if test="position != null" >
+        position,
+      </if>
+      <if test="advertiseImg != null" >
+        advertise_img,
+      </if>
+      <if test="link != null" >
+        link,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="isForbid != null" >
+        is_forbid,
+      </if>
+      <if test="createUserId != null" >
+        create_user_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id,
+      </if>
+      <if test="modifyDate != null" >
+        modify_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="advertiseId != null" >
+        #{advertiseId,jdbcType=INTEGER},
+      </if>
+      <if test="position != null" >
+        #{position,jdbcType=SMALLINT},
+      </if>
+      <if test="advertiseImg != null" >
+        #{advertiseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isForbid != null" >
+        #{isForbid,jdbcType=SMALLINT},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        #{modifyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyDate != null" >
+        #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TAdvertise" >
+    update public.t_advertise
+    <set >
+      <if test="position != null" >
+        position = #{position,jdbcType=SMALLINT},
+      </if>
+      <if test="advertiseImg != null" >
+        advertise_img = #{advertiseImg,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null" >
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="isForbid != null" >
+        is_forbid = #{isForbid,jdbcType=SMALLINT},
+      </if>
+      <if test="createUserId != null" >
+        create_user_id = #{createUserId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyUserId != null" >
+        modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+      </if>
+      <if test="modifyDate != null" >
+        modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where advertise_id = #{advertiseId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TAdvertise" >
+    update public.t_advertise
+    set position = #{position,jdbcType=SMALLINT},
+      advertise_img = #{advertiseImg,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      is_forbid = #{isForbid,jdbcType=SMALLINT},
+      create_user_id = #{createUserId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+      modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+    where advertise_id = #{advertiseId,jdbcType=INTEGER}
+  </update>
+  <!-- 分页查询Vo映射 -->
+  <resultMap id="BaseResultMapVo" type="com.samton.platform.pm.bean.vo.TAdvertiseVo">
+    <id column="advertise_id" property="advertiseId" jdbcType="INTEGER" />
+    <result column="position" property="position" jdbcType="SMALLINT" />
+    <result column="advertise_img" property="advertiseImg" jdbcType="VARCHAR" />
+    <result column="link" property="link" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="is_forbid" property="isForbid" jdbcType="SMALLINT" />
+    <result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="modify_user_id" property="modifyUserId" jdbcType="BIGINT" />
+    <result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+    <result column="posited" property="posited" jdbcType="VARCHAR" />
+    <result column="forbid" property="forbid" jdbcType="VARCHAR" />
+  </resultMap>
+  <!-- 分页查询Vo字段 -->
+  <sql id="queryPageListVo_column">
+     advertise_id, position, advertise_img, link, remark, is_forbid, create_user_id, create_date,
+    modify_user_id, modify_date,
+   case when position =0 then '首页-顶部区域' when position =1 then '首页-中部区域' when position =2 then '首页-底部区域'  end as posited,
+   case when is_forbid=0 then '启用' when is_forbid=1 then '禁用' end as forbid
+
+  </sql>
+  <!-- 分页查询Vo查询条件 -->
+  <sql id="queryPageListVo_where">
+    <if test="search != null">
+        <if test="search.position != null">
+          and position =#{search.position,jdbcType=INTEGER}
+        </if>
+    </if>
+  </sql>
+  <!-- 分页查询Vo查询-->
+  <select id="queryPageListVo" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultMap="BaseResultMapVo">
+    select
+    <include refid="queryPageListVo_column"></include>
+    from t_advertise
+    <where>
+      <include refid="queryPageListVo_where"></include>
+    </where>
+    order by modify_date DESC
+  </select>
+  <!-- 分页查询Vo导出-->
+  <select id="exportPageListVo" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultType="java.util.Map">
+    select
+    <include refid="queryPageListVo_column"></include>
+    from t_advertise
+    <where>
+      <include refid="queryPageListVo_where"></include>
+    </where>
+    order by modify_date DESC
+  </select>
+  <select id="selectAdvertiseById" parameterType="java.lang.Integer" resultMap="BaseResultMapVo">
+    select
+    <include refid="queryPageListVo_column"></include>
+    from t_advertise
+    where advertise_id = #{advertiseId,jdbcType=INTEGER}
+  </select>
+  <select id="selectAdvertiseByPostion" parameterType="java.lang.Short" resultMap="BaseResultMapVo">
+    select
+    <include refid="queryPageListVo_column"></include>
+    from t_advertise
+    where position = #{position,jdbcType=SMALLINT}  and  is_forbid = 0
+  </select>
+</mapper>

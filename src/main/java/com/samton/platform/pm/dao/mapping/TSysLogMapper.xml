@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.pm.dao.TSysLogMapper">
+	<resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TSysLog">
+		<id column="log_id" property="logId" jdbcType="BIGINT" />
+		<result column="operate_date" property="operateDate" jdbcType="TIMESTAMP" />
+		<result column="operate_desc" property="operateDesc" jdbcType="VARCHAR" />
+		<result column="module_name" property="moduleName" jdbcType="VARCHAR" />
+		<result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+		<result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_user_id" property="modifyUserId" jdbcType="BIGINT" />
+		<result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		log_id, operate_date, operate_desc, module_name,
+		create_user_id, create_user_name, create_date, modify_user_id, modify_user_name, modify_date
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_log
+		where log_id = #{logId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from public.t_sys_log
+		where log_id = #{logId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TSysLog">
+		insert into public.t_sys_log (operate_date, operate_desc,module_name,
+		create_user_id, create_user_name, create_date,
+		modify_user_id, modify_user_name, modify_date)
+		values (#{operateDate,jdbcType=TIMESTAMP},
+		#{operateDesc,jdbcType=VARCHAR}, #{moduleName,jdbcType=VARCHAR},
+		#{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR},
+		#{createDate,jdbcType=TIMESTAMP},
+		#{modifyUserId,jdbcType=BIGINT}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TSysLog" useGeneratedKeys="true" keyProperty="logId">
+		insert into public.t_sys_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="operateDate != null">
+				operate_date,
+			</if>
+			<if test="operateDesc != null">
+				operate_desc,
+			</if>
+			<if test="moduleName != null">
+				module_name,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id,
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name,
+			</if>
+			<if test="modifyDate != null">
+				modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="operateDate != null">
+				#{operateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operateDesc != null">
+				#{operateDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="moduleName != null">
+				#{moduleName,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				#{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				#{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TSysLog">
+		update public.t_sys_log
+		<set>
+			<if test="operateDate != null">
+				operate_date = #{operateDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="operateDesc != null">
+				operate_desc = #{operateDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="moduleName != null">
+				module_name = #{moduleName,jdbcType=VARCHAR},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where log_id = #{logId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysLog">
+		update public.t_sys_log
+		set operate_date = #{operateDate,jdbcType=TIMESTAMP},
+		operate_desc = #{operateDesc,jdbcType=VARCHAR},
+		module_name = #{moduleName,jdbcType=VARCHAR},
+		create_user_id = #{createUserId,jdbcType=BIGINT},
+		create_user_name = #{createUserName,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+		modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+		modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+		where log_id = #{logId,jdbcType=BIGINT}
+	</update>
+	<select id="queryOprLogs" resultMap="BaseResultMap" parameterType="com.samton.platform.pm.bean.entity.TSysLog">
+		select login_name, user_name, module_name, operate_desc, operate_date
+		from t_sys_log l
+		inner join t_sys_pm_user u on l.create_user_id = u.user_id
+		 <where>
+			 <if test="search.loginName != null and search.loginName != ''">
+				 and u.login_name like'%'||#{search.loginName,jdbcType=VARCHAR}||'%'
+			 </if>
+			 <if test="search.userName != null and search.userName != ''">
+				 and u.user_name like '%'||#{search.userName,jdbcType=VARCHAR}||'%'
+			 </if>
+			 <if test="search.moduleName != null">
+				 and l.module_name like'%'||#{search.moduleName,jdbcType=VARCHAR}||'%'
+			 </if>
+			 <if test="search.startDateTime != null">
+				 <![CDATA[ and l.operate_date >= #{search.startDateTime,jdbcType=TIMESTAMP} ]]>
+			 </if>
+			 <if test="search.endDateTime != null">
+				 <![CDATA[ and l.operate_date <= #{search.endDateTime,jdbcType=TIMESTAMP} ]]>
+			 </if>
+		 </where>
+		order by operate_date desc
+	</select>
+</mapper>

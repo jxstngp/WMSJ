@@ -1,0 +1,122 @@
+#kkpager{
+	clear:both;
+	color:#000;
+	padding:2px 5px 0 5px;
+	font-size:12px;
+	margin:0 10px;
+	border: 1px solid #e0e3f2;
+    background-color: #f6f7fb;
+    height:35px;
+}
+#kkpager a{
+	float: left;
+	border: 1px solid #ccc;
+	display: inline;
+	padding: 3px 10px 3px 10px;
+	margin-right: 5px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	cursor: pointer;
+	background: #fff;
+	text-decoration:none;
+	color:#000;
+}
+
+#kkpager span.disabled{
+	float: left;
+	display: inline;
+	padding: 2px 10px 2px 10px;
+	margin-right: 5px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border:1px solid #DFDFDF;
+	background-color:#FFF;
+	color:#DFDFDF;
+}
+#kkpager span.curr{
+	float: left;
+	border: 1px solid #15a5fb;
+	display: inline;
+	padding: 3px 10px 3px 10px;
+	margin-right: 5px;
+	border-radius: 3px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	background: #15a5fb;
+	color: #fff;
+}
+#kkpager a:hover{
+	border:1px solid #15a5fb; 
+	background-color:#15a5fb; 
+	color:#fff;
+}
+#kkpager span.normalsize{
+}
+#kkpager_gopage_wrap{
+	position:relative;
+	left:0px;
+	top:0px;
+}
+#kkpager_btn_go {
+	width:44px;
+	height:22px;
+	border:0px;
+	overflow:hidden;
+	line-height:140%;
+	padding:0px;
+	margin:0px;
+	text-align:center;
+	cursor:pointer;
+	background-color:#15a5fb;
+	color:#FFF;
+	position:absolute;
+	left:20px;
+	top:-4px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	display:none;
+}
+#kkpager_btn_go_input{
+	width:30px;
+	height:22px;
+	color:#000;
+	text-align:center;
+	margin-left:1px;
+	margin-right:1px;
+	border:1px solid #cfd9db;
+	position:relative;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	left:0px;
+	top:-1px;
+	outline:none;
+	
+}
+
+#kkpager_btn_go_input.focus{
+	border-color:#31ACE2;
+}
+
+#kkpager .pageBtnWrap{
+	float:right;
+	padding-top:3px;
+}
+#kkpager .infoTextAndGoPageBtnWrap{
+	float:left;
+}
+#kkpager .infoTextAndGoPageBtnWrap>span{ padding-right:7px;}
+#kkpager .spanDot{
+	float:left;
+	margin-right:5px;
+}
+
+#kkpager .currPageNum{
+	color:#FD7F4D;
+}
+
+#kkpager .infoTextAndGoPageBtnWrap{
+	padding-top:5px;
+}
+#kkpager .select{ margin:0 4px; width:50px; min-width: auto; height:22px; margin-top:-2px;}

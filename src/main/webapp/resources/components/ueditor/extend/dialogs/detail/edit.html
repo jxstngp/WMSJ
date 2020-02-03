@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>明细控件</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="../../../dialogs/internal.js"></script>
+    <script type="text/javascript" src="../../../../../js/jquery/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+        *{margin:0;padding:0;color: #838383;}
+        table{font-size: 12px;margin: 10px;line-height: 30px}
+        .txt{height:21px;line-height:21px;border:1px solid #d7d7d7;color:black;width: 100%;}
+        .itemTable{margin: 0;}
+        .itemTable tr th {color:black;}
+        .itemTable tr td {text-align: center;}
+    </style>
+</head>
+<body>
+	<table width="400px">
+        <tr>
+            <td width="60px"><label for="name"> <var id="lang_input_name"></var></label></td>
+            <td><input class="txt" id=name type="text" /></td>
+        </tr>
+  		<tr>
+  			<td colspan="2">
+  			<table class="itemTable" width="100%">
+	  			<thead>
+	  				<tr>
+		  				<th>编号</th>
+		  				<th>控件名称</th>
+		  				<th>合计</th>
+	  				</tr>
+	  			</thead>
+	  			<tbody id="items">
+	  			</tbody>
+  			</table>
+  			</td>
+		</tr>
+    </table>
+    <script type="text/javascript">
+    var c = 10;
+    for ( var i=1; i<=c; i++ ) {
+        var tr = '<tr><td width="60px">'+i+'</td><td><input id="name_'+i+'" class="txt"/></td><td><input id="sum_'+i+'" type="checkbox"/></td></tr>';
+        $("#items").append(tr);
+    }
+    var me = editor,
+    doc = me.document;
+    var input = me._detail;
+    var name = "";
+	if ( input ) {
+		$G("name").value = input.getAttribute("title");
+		var items = eval(input.getAttribute("items"));
+		$.each(items, function(i,e){
+			var idx = e["index"];
+			$("#name_"+idx).val(e["name"]);
+			var sum = e["sum"];
+			if ( sum == 1 ) {
+				$("#sum_"+idx).attr("checked", true);
+			}
+		});
+
+		name = input.getAttribute("name");
+	}
+	dialog.onok = handleDialogOk;
+	dialog.oncancel = function(){
+		editor._detail = null;
+	}
+	function handleDialogOk() {
+		var data = {};
+		data.name = $G("name").value;
+		if ( data.name=='' ) {
+			alert("请输入控件名称！");
+			return false;
+		}
+		var newInput;
+		if ( input ) {
+			newInput = $(input);
+		} else {
+			newInput = $("<input>");
+			newInput.attr("type", "text");
+		}
+		newInput.attr({
+			"title":data.name,
+			"value":data.name+"{明细字段}",
+			"class":"detail"
+		});
+
+		var items = [];
+		$("#items>tr").each(function(i,e){
+			var idx = i+1;
+			var iname = $("#name_"+idx).val();
+			var isum = $("#sum_"+idx).is(":checked") ? 1 : 0;
+			var d = {"index":idx, "name":iname, "sum":isum};
+			if ( $.trim(iname) != '' ) {
+				items.push(d);
+			}
+		});
+		newInput.attr("items", JSON.stringify(items));
+		
+		if ( input ) {
+		} else {
+			//插入
+			me._control_counter = me._control_counter + 1;
+			name = "DATA_"+me._control_counter;
+			newInput.attr("name", name);
+			
+            editor.execCommand("inserthtml", newInput.wrap("<div></div>").parent().html());
+		}
+		editor._detail = null;
+	}
+    </script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samton.platform.common.dao.CommonSelectMapper">
+
+  <!-- 公共的自定义标签使用 -->
+  <select id="selectOptions" parameterType="com.samton.platform.framework.bean.CommonSelect" resultType="java.util.Map">
+    <choose>
+      <when test="sql != null">${sql}</when>
+      <otherwise>
+        select ${val} as val, ${text} as text from ${table}
+        <if test="where != null and where != ''">
+          where ${where}
+        </if>
+        order by ${order}
+      </otherwise>
+    </choose>
+  </select>
+
+</mapper>

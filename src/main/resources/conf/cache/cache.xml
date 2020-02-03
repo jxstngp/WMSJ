@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache>
+	<!--缓存开关 -->
+	<memcached-switch>false</memcached-switch>
+	<!-- 检查缓存服务是否失效开关 -->
+	<memcached-alive-task-switch>false</memcached-alive-task-switch>
+	<memcached-servers>
+		<memcached-server>
+			<ip>127.0.0.1</ip>
+			<!-- <ip>192.168.18.13</ip> -->
+			<port>11211</port>
+			<weight>1</weight>
+		</memcached-server>
+
+
+		<!-- <memcached-server>
+			<ip>192.168.18.111</ip>
+			<port>11211</port>
+			<weight>1</weight> 
+		</memcached-server> -->
+	</memcached-servers>
+</cache>

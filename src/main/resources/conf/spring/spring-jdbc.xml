@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+            xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+ <bean id="st.sys.writeDS" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${driverClass}" />
+		<property name="url" value="${jdbcUrl}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />
+		
+		<!--初始化连接大小-->
+		<property name="initialSize" value="3"></property>
+		<!--连接池最大数量-->
+		<property name="maxTotal" value="5"></property>
+		<!--连接池最大空闲-->
+		<property name="maxIdle" value="5"></property>
+		<!--连接池最小空闲-->
+		<property name="minIdle" value="3"></property>
+		<!--获取连接最大等待时间-->
+		<property name="maxWaitMillis" value="60000"></property>
+	</bean>
+	
+	<bean id="st.sys.readDS1" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${driverClass}" />
+		<property name="url" value="${jdbcUrl}" />
+		<property name="username" value="${user}" />
+		<property name="password" value="${password}" />	 
+
+		<property name="initialSize" value="3"></property>
+		<!--连接池最大数量-->
+		<property name="maxTotal" value="5"></property>
+		<!--连接池最大空闲-->
+		<property name="maxIdle" value="3"></property>
+		<!--连接池最小空闲-->
+		<property name="minIdle" value="3"></property>
+		<!--获取连接最大等待时间-->
+		<property name="maxWaitMillis" value="60000"></property>
+	</bean>
+   
+
+ <!-- 配置多数据源路由器 -->  
+ <bean id="dataSource" class="com.samton.platform.framework.db.ds.DynamicDataSource">
+  		<property name="masterDataSources">
+  			<map key-type="java.lang.String">
+				<entry key="master" value-ref="st.sys.writeDS"></entry>
+			</map>
+  		</property>
+		<property name="slaveDataSources">
+			<map key-type="java.lang.String">
+				<entry key="slave1" value-ref="st.sys.readDS1"></entry>
+			</map>
+		</property>
+		<property name="remoteDataSources">
+			<map key-type="java.lang.String">
+				<entry key="remote1" value-ref="st.sys.readDS1"></entry>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="st.sys.writeDS" />
+	</bean>		 
+		 
+	
+	 <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+</beans>

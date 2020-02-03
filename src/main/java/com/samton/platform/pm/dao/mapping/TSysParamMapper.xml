@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.pm.dao.TSysParamMapper">
+	<resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TSysParam">
+		<id column="param_id" property="paramId" jdbcType="BIGINT" />
+		<result column="param_name" property="paramName" jdbcType="VARCHAR" />
+		<result column="param_value" property="paramValue" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="state" property="state" jdbcType="SMALLINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		param_id, param_name, param_value, remark, state
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_param
+		where param_id = #{paramId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from
+		public.t_sys_param
+		where param_id = #{paramId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TSysParam">
+		insert into public.t_sys_param
+		(param_id, param_name,
+		param_value,
+		remark, state)
+		values
+		(#{paramId,jdbcType=BIGINT}, #{paramName,jdbcType=VARCHAR},
+		#{paramValue,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{state,jdbcType=SMALLINT})
+	</insert>
+	<insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TSysParam"
+		useGeneratedKeys="true" keyProperty="paramId">
+		insert into public.t_sys_param
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="paramId != null">
+				param_id,
+			</if>
+			<if test="paramName != null">
+				param_name,
+			</if>
+			<if test="paramValue != null">
+				param_value,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="paramId != null">
+				#{paramId,jdbcType=BIGINT},
+			</if>
+			<if test="paramName != null">
+				#{paramName,jdbcType=VARCHAR},
+			</if>
+			<if test="paramValue != null">
+				#{paramValue,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=SMALLINT},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TSysParam">
+		update public.t_sys_param
+		<set>
+			<if test="paramName != null">
+				param_name = #{paramName,jdbcType=VARCHAR},
+			</if>
+			<if test="paramValue != null">
+				param_value = #{paramValue,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=SMALLINT},
+			</if>
+		</set>
+		where param_id = #{paramId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysParam">
+		update
+		public.t_sys_param
+		set param_name = #{paramName,jdbcType=VARCHAR},
+		param_value = #{paramValue,jdbcType=VARCHAR},
+		remark =
+		#{remark,jdbcType=VARCHAR},
+		state = #{state,jdbcType=SMALLINT}
+		where
+		param_id = #{paramId,jdbcType=BIGINT}
+	</update>
+	<select id="getParamByName" resultMap="BaseResultMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_param
+		where param_name =
+		#{paramName,jdbcType=VARCHAR}
+		AND state = 1 limit 1
+	</select>
+</mapper>

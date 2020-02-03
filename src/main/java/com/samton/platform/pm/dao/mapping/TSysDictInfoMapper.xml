@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.samton.platform.pm.dao.TSysDictInfoMapper">
+	<resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TSysDictInfo">
+		<id column="dict_id" jdbcType="BIGINT" property="dictId" />
+		<result column="dict_name" jdbcType="VARCHAR" property="dictName" />
+		<result column="sort" jdbcType="INTEGER" property="sort" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="type_id" jdbcType="BIGINT" property="typeId" />
+		<result column="state" jdbcType="SMALLINT" property="state" />
+		<result column="create_user_id" jdbcType="BIGINT" property="createUserId" />
+		<result column="create_user_name" jdbcType="VARCHAR" property="createUserName" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="modify_user_id" jdbcType="BIGINT" property="modifyUserId" />
+		<result column="modify_user_name" jdbcType="VARCHAR" property="modifyUserName" />
+		<result column="modify_date" jdbcType="TIMESTAMP" property="modifyDate" />
+		<result column="type_name" jdbcType="VARCHAR" property="typeName" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		dict_id, dict_name, sort, remark, type_id, state, create_user_id,
+		create_user_name, create_date, modify_user_id, modify_user_name, modify_date
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_dict_info
+		where dict_id = #{dictId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from public.t_sys_dict_info
+		where dict_id = #{dictId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TSysDictInfo">
+		insert into public.t_sys_dict_info (dict_id, dict_name, sort,
+		remark, type_id, state,
+		create_user_id, create_user_name, create_date,
+		modify_user_id, modify_user_name, modify_date)
+		values (#{dictId,jdbcType=BIGINT}, #{dictName,jdbcType=VARCHAR},
+		#{sort,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR}, #{typeId,jdbcType=BIGINT},
+		#{state,jdbcType=SMALLINT},
+		#{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{modifyUserId,jdbcType=BIGINT}, #{modifyUserName,jdbcType=VARCHAR},
+		#{modifyDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TSysDictInfo">
+		insert into public.t_sys_dict_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="dictId != null">
+				dict_id,
+			</if>
+			<if test="dictName != null">
+				dict_name,
+			</if>
+			<if test="sort != null">
+				sort,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="typeId != null">
+				type_id,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id,
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name,
+			</if>
+			<if test="modifyDate != null">
+				modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="dictId != null">
+				#{dictId,jdbcType=BIGINT},
+			</if>
+			<if test="dictName != null">
+				#{dictName,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				#{sort,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="typeId != null">
+				#{typeId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null"> 
+				#{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				#{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				#{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TSysDictInfo">
+		update public.t_sys_dict_info
+		<set>
+			<if test="dictName != null">
+				dict_name = #{dictName,jdbcType=VARCHAR},
+			</if>
+			<if test="sort != null">
+				sort = #{sort,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="typeId != null">
+				type_id = #{typeId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where dict_id = #{dictId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysDictInfo">
+		update public.t_sys_dict_info
+		set dict_name = #{dictName,jdbcType=VARCHAR},
+		sort = #{sort,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR},
+		type_id = #{typeId,jdbcType=BIGINT},
+		state = #{state,jdbcType=SMALLINT},
+		create_user_id = #{createUserId,jdbcType=BIGINT},
+		create_user_name = #{createUserName,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+		modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+		modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+		where dict_id = #{dictId,jdbcType=BIGINT}
+	</update>
+	<select id="queryDictInfoList" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination" resultMap="BaseResultMap">
+		select dict_id, dict_name, di.remark, di.type_id, di.create_user_id,
+		dt.type_name, di.create_date, di.sort
+		from t_sys_dict_info di
+		INNER JOIN t_sys_dict_type dt ON di.type_id = dt.type_id
+		where di.state &gt; 0
+		<if test="search.dictName != null and search.dictName != ''">
+			and dict_name like'%'||#{search.dictName,jdbcType=VARCHAR}||'%'
+		</if>
+		<if test="search.typeId != null and search.typeId != ''">
+			and di.type_id = #{search.typeId,jdbcType=BIGINT}
+		</if>
+		order by di.sort
+	</select>
+	<select id="queryDictInfoListByTypeId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from public.t_sys_dict_info 
+		where state &gt; 0 and type_id = #{typeId,jdbcType=BIGINT}
+		order by sort
+	</select>
+
+</mapper>

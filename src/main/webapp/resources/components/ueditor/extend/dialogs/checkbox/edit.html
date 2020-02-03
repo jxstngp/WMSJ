@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>编辑选择框</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <script type="text/javascript" src="../../../dialogs/internal.js"></script>
+    <script type="text/javascript" src="../../../../../js/jquery/jquery-1.8.3.min.js"></script>
+    <style type="text/css">
+        *{margin:0;padding:0;color: #838383;}
+        table{font-size: 12px;margin: 10px;line-height: 30px}
+        .txt{height:21px;line-height:21px;border:1px solid #d7d7d7;color:black;width: 100%;}
+    </style>
+</head>
+<body>
+	<table width="260px" id="options">
+        <tr>
+            <td><label for="name"> <var id="lang_input_name"></var></label></td>
+            <td><input class="txt" id=name type="text" /></td>
+        </tr>
+        <tr>
+            <td><label for="defaultVal"> <var id="lang_input_default_val"></var></label></td>
+            <td>
+            	<select id="defaultVal">
+            		<option value="0">不选中</option>
+            		<option value="1">选中</option>
+            	</select>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+    var me = editor,
+    doc = me.document;
+    var input = me._checkbox;
+    var name = "";
+	if ( input ) {
+		$G("name").value = input.getAttribute("title");
+		$("#defaultVal").val(input.getAttribute("defaultVal"));
+		name = input.getAttribute("name");
+	}
+	dialog.onok = handleDialogOk;
+	dialog.oncancel = function(){
+		editor._checkbox = null;
+	}
+	function handleDialogOk() {
+		var data = {};
+		data.name = $G("name").value;
+		if ( data.name=='' ) {
+			alert("请输入控件名称！");
+			return false;
+		}
+		data.defaultVal = $("#defaultVal").val();
+		var newInput;
+		if ( input ) {
+			newInput = $(input);
+		} else {
+			newInput = $("<input>");
+			newInput.attr("type", "checkbox");
+		}
+		newInput.attr({
+			"title":data.name,
+			"value":"1",
+			"defaultVal":data.defaultVal,
+			"fmt":data.fmt
+		});
+		if ( data.defaultVal == '1' ) {
+			newInput.attr("checked", true);
+		}
+		if ( input ) {
+		} else {
+			//插入
+			me._control_counter = me._control_counter + 1;
+			name = "DATA_"+me._control_counter;
+			newInput.attr("name", name);
+			var span = $("<span name='form-control'></span>");
+			span.append(newInput);
+            editor.execCommand("inserthtml", span.wrap("<div></div>").parent().html());
+		}
+		editor._checkbox = null;
+	}
+    </script>
+</body>
+</html>

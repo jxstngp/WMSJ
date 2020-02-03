@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.samton.platform.pm.dao.TSysPmUserMapper">
+	<resultMap id="BaseResultMap" type="com.samton.platform.pm.bean.entity.TSysPmUser">
+		<id column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="login_name" property="loginName" jdbcType="VARCHAR" />
+		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="depart_id" property="departId" jdbcType="BIGINT" />
+		<result column="state" property="state" jdbcType="SMALLINT" />
+		<result column="create_user_id" property="createUserId" jdbcType="BIGINT" />
+		<result column="create_user_name" property="createUserName" jdbcType="VARCHAR" />
+		<result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+		<result column="modify_user_id" property="modifyUserId" jdbcType="BIGINT" />
+		<result column="modify_user_name" property="modifyUserName" jdbcType="VARCHAR" />
+		<result column="modify_date" property="modifyDate" jdbcType="TIMESTAMP" />
+		<result column="depart_name" property="departName" jdbcType="BIGINT" />
+		<result column="role_names" property="roleNames" jdbcType="BIGINT" />
+	</resultMap>
+	
+	<resultMap id="UserSelectMap" type="com.samton.platform.common.bean.entity.UserSelectVO">
+		<id column="user_id" property="userId" jdbcType="BIGINT" />
+		<result column="user_name" property="userName" jdbcType="VARCHAR" />
+		<result column="depart_id" property="departId" jdbcType="BIGINT" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		user_id, login_name, pwd, user_name, email, mobile, depart_id, state,
+		create_user_id, create_user_name, create_date, modify_user_id, modify_user_name, modify_date
+	</sql>
+	<select id="selectUserList" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List" />
+		from t_sys_pm_user
+		where state = 1
+	</select>
+	<select id="selectUserListByDepartId" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select <include refid="Base_Column_List" />
+		from t_sys_pm_user
+		where depart_id = #{departId,jdbcType=BIGINT}
+	</select>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select <include refid="Base_Column_List" />
+		from public.t_sys_pm_user
+		where user_id = #{userId,jdbcType=BIGINT}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+		delete from public.t_sys_pm_user
+		where user_id = #{userId,jdbcType=BIGINT}
+	</delete>
+	<insert id="insert" parameterType="com.samton.platform.pm.bean.entity.TSysPmUser">
+		insert into public.t_sys_pm_user (user_id, login_name,
+		pwd, user_name, email, mobile, depart_id, state,
+		create_user_id, create_user_name, create_date,
+		modify_user_id, modify_user_name, modify_date)
+		values (#{userId,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR},
+		#{pwd,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{mobile,jdbcType=VARCHAR}, #{departId,jdbcType=BIGINT}, #{state,jdbcType=SMALLINT},
+		#{createUserId,jdbcType=BIGINT}, #{createUserName,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP},
+		#{modifyUserId,jdbcType=BIGINT}, #{modifyUserName,jdbcType=VARCHAR}, #{modifyDate,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.samton.platform.pm.bean.entity.TSysPmUser">
+		insert into public.t_sys_pm_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="loginName != null">
+				login_name,
+			</if>
+			<if test="pwd != null">
+				pwd,
+			</if>
+			<if test="userName != null">
+				user_name,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="mobile != null">
+				mobile,
+			</if>
+			<if test="departId != null">
+				depart_id,
+			</if>
+			<if test="state != null">
+				state,
+			</if>
+			<if test="createUserId != null">
+				create_user_id,
+			</if>
+			<if test="createUserName != null">
+				create_user_name,
+			</if>
+			<if test="createDate != null">
+				create_date,
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id,
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name,
+			</if>
+			<if test="modifyDate != null">
+				modify_date,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="userId != null">
+				#{userId,jdbcType=BIGINT},
+			</if>
+			<if test="loginName != null">
+				#{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				#{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				#{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				#{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="departId != null">
+				#{departId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				#{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				#{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				#{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				#{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				#{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				#{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.samton.platform.pm.bean.entity.TSysPmUser">
+		update public.t_sys_pm_user
+		<set>
+			<if test="loginName != null">
+				login_name = #{loginName,jdbcType=VARCHAR},
+			</if>
+			<if test="pwd != null">
+				pwd = #{pwd,jdbcType=VARCHAR},
+			</if>
+			<if test="userName != null">
+				user_name = #{userName,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="mobile != null">
+				mobile = #{mobile,jdbcType=VARCHAR},
+			</if>
+			<if test="departId != null">
+				depart_id = #{departId,jdbcType=BIGINT},
+			</if>
+			<if test="state != null">
+				state = #{state,jdbcType=SMALLINT},
+			</if>
+			<if test="createUserId != null">
+				create_user_id = #{createUserId,jdbcType=BIGINT},
+			</if>
+			<if test="createUserName != null">
+				create_user_name = #{createUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="createDate != null">
+				create_date = #{createDate,jdbcType=TIMESTAMP},
+			</if>
+			<if test="modifyUserId != null">
+				modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+			</if>
+			<if test="modifyUserName != null">
+				modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+			</if>
+			<if test="modifyDate != null">
+				modify_date = #{modifyDate,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysPmUser">
+		update public.t_sys_pm_user
+		set login_name = #{loginName,jdbcType=VARCHAR},
+		pwd = #{pwd,jdbcType=VARCHAR},
+		user_name = #{userName,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		mobile = #{mobile,jdbcType=VARCHAR},
+		depart_id = #{departId,jdbcType=BIGINT},
+		state = #{state,jdbcType=SMALLINT},
+		create_user_id = #{createUserId,jdbcType=BIGINT},
+		create_user_name = #{createUserName,jdbcType=VARCHAR},
+		create_date = #{createDate,jdbcType=TIMESTAMP},
+		modify_user_id = #{modifyUserId,jdbcType=BIGINT},
+		modify_user_name = #{modifyUserName,jdbcType=VARCHAR},
+		modify_date = #{modifyDate,jdbcType=TIMESTAMP}
+		where user_id = #{userId,jdbcType=BIGINT}
+	</update>
+
+	<select id="queryUsers" resultMap="BaseResultMap" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination">
+		select u.user_id, u.user_name, u.login_name, u.mobile, u.email,
+		u.state, d.depart_name, d.depart_id,
+		array_to_string(array(select r.role_name from t_sys_pm_role r inner join t_sys_pm_role_user ru on r.role_id = ru.role_id where ru.user_id= u.user_id and ru.state = 1),'，') as role_names
+		from t_sys_pm_user u
+		left join (select depart_id, depart_name from t_sys_depart where state != 0) d ON u.depart_id = d.depart_id
+		where u.user_id != 0 and u.state != 0
+		<if test="search.loginName != null and search.loginName != ''">
+			and u.login_name like'%'||#{search.loginName,jdbcType=VARCHAR}||'%'
+		</if>
+		<if test="search.userName != null and search.userName != ''">
+			and u.user_name like'%'||#{search.userName,jdbcType=VARCHAR}||'%'
+		</if>
+		order by u.user_id desc
+	</select>
+
+	<update id="batchUpdateByPrimaryKey" parameterType="com.samton.platform.pm.bean.entity.TSysPmUser">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			update t_sys_pm_user
+			<set>
+				login_name = #{item.loginName,jdbcType=VARCHAR},
+				pwd = #{item.pwd,jdbcType=VARCHAR},
+				user_name = #{item.userName,jdbcType=VARCHAR},
+				email = #{item.email,jdbcType=VARCHAR},
+				mobile = #{item.mobile,jdbcType=VARCHAR},
+				state = #{item.state,jdbcType=SMALLINT},
+				create_user_id = #{item.createUserId,jdbcType=BIGINT},
+				create_user_name = #{item.createUserName,jdbcType=VARCHAR},
+				create_date = #{item.createDate,jdbcType=TIMESTAMP},
+				modify_user_id = #{item.modifyUserId,jdbcType=BIGINT},
+				modify_user_name = #{item.modifyUserName,jdbcType=VARCHAR},
+				modify_date = #{item.modifyDate,jdbcType=TIMESTAMP}
+			</set>
+			where user_id = #{item.userId,jdbcType=BIGINT}
+		</foreach>
+	</update>
+
+	<select id="getUserByLoginNamePwd" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_sys_pm_user
+		where login_name = #{loginName,jdbcType=VARCHAR}
+		and pwd = #{pwd,jdbcType=VARCHAR}
+		and state > 0
+	</select>
+
+	<select id="getUserByLoginName" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from public.t_sys_pm_user
+		where login_name = #{loginName,jdbcType=VARCHAR}
+		and state > 0
+		limit 1
+	</select>
+
+	<select id="getUserIdByLoginName" resultType="java.lang.Long">
+		select *
+		from t_sys_pm_user
+		where ((email=#{loginName,jdbcType=VARCHAR} and email_verify = 1 )
+		or (mobile_phone = #{loginName,jdbcType=VARCHAR} and mobile_verify = 1))
+		and state > 0
+		limit 1
+	</select>
+
+	<select id="exportUserList" resultType="java.util.Map" parameterType="com.samton.platform.framework.mybatis.pagination.Pagination">
+		select u.user_id, u.user_name, u.login_name, u.mobile, u.email,
+		u.state, d.depart_name, d.depart_id,
+		array_to_string(array(select r.role_name from t_sys_pm_role r inner join t_sys_pm_role_user ru on r.role_id = ru.role_id where ru.user_id = u.user_id),'，') as role_names
+		from t_sys_pm_user u
+		left join (select depart_id, depart_name from t_sys_depart where state != 0) d ON u.depart_id = d.depart_id
+		where u.user_id != 0 and u.state != 0
+		<if test="search.loginName != null and search.loginName != ''">
+			and u.login_name like '%'||#{search.loginName,jdbcType=VARCHAR}||'%'
+		</if>
+		<if test="search.userName != null and search.userName != ''">
+			and u.user_name like '%'||#{search.userName,jdbcType=VARCHAR}||'%'
+		</if>
+		order by u.user_id desc
+	</select>
+	
+	<select id="getUsersForSelect" resultMap="UserSelectMap">
+		select user_id,user_name,COALESCE(depart_id, 0) depart_id
+		from public.t_sys_pm_user
+		where state = 1
+	</select>
+
+	<resultMap id="autoCompleteVO" type="com.samton.platform.common.bean.entity.AutoCompleteVO">
+		<id column="user_id" property="id" jdbcType="BIGINT" />
+		<result column="user_name" property="label" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="queryUserName" resultMap="autoCompleteVO" parameterType="java.lang.String">
+	 	SELECT user_id, user_name FROM t_sys_pm_user where  state = 1 and user_name like '%'||#{name,jdbcType=VARCHAR}||'%' LIMIT 10
+	</select>
+</mapper>

@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>插入字段要素</title>
+<script type="text/javascript" src="../internal.js"></script>
+<script type="text/javascript">
+	function show_flow_num() {
+		var mode_title2 = document.getElementById("creat_num").value;
+		var mode_title3 = document.getElementById("creat_begin").value;
+		var mode_title4 = document.getElementById("creat_show");
+		var show_value = auto_num(mode_title3, mode_title2);
+		if (show_value === false) {
+			return false;
+		} else {
+			mode_title4.value = show_value;
+		}
+	}
+	
+	function auto_num(num,leng){ 
+		if(isNaN(num)){ 
+			alert("请输入数字!");   
+			return false;  
+		}else{
+			if(num.length > leng){
+				alert("流水号起始数字位数过长");  
+ 				return false;  
+ 			}else if(num.length == leng){
+ 				return num;
+ 			}else if(num.length < leng){
+ 				var newnum = num;
+ 				var add_num = leng-num.length;
+ 				var i;
+ 				for(i=0;i<add_num;i++){
+ 					newnum = '0'+newnum;
+ 				}
+ 				return newnum; 
+ 			} 
+		} 
+	} 
+	
+	function insertHtml(content) {
+		// 插入内容到编辑器
+		editor.execCommand('inserthtml', content);
+	}
+	
+	function insertNo(){
+		var content = "[流水号";
+		var creat_num = document.getElementById("creat_num").value;
+		var creat_begin = document.getElementById("creat_begin").value;
+		content += "|"+creat_num +"|" +creat_begin +"]";
+		insertHtml(content);
+	}
+</script>
+<style type="text/css">
+body {
+	font-size: 14px;
+	color: black;
+}
+
+ul>li {
+	padding: 5px 0 5px 0;
+	border: 1px solid white;
+	cursor: pointer;
+}
+
+ul>li:HOVER {
+	border: 1px solid #aaa;
+	background: #ccc;
+}
+</style>
+</head>
+<body>
+	<div style="padding: 10px; margin: 5px;">
+		<div>
+			流水号:<input style="width: 20px;" type="text" id="creat_num" value="4"
+				onkeyup="show_flow_num();" />(位数)<input style="width: 20px;" type="text"
+				id="creat_begin" value="0" onkeyup="show_flow_num();" />(起始数) 
+				<br> <input style="with:100px;" type="text" id="creat_show" value="0000" />(预览)
+		</div>
+		<div style="margin-top: 10px;">
+			<ul>
+				<li onclick="insertNo();">[流水号](流程创建流水号)</li>
+				<li onclick="insertHtml('[年份]');">[年份](流程创建年份)</li>
+				<li onclick="insertHtml('[月份]');">[月份](流程创建月份)</li>
+				<li onclick="insertHtml('[日期]');">[日期](流程创建日期)</li>
+				<li onclick="insertHtml('[时]');">[时](流程创建时)</li>
+				<li onclick="insertHtml('[分]');">[分](流程创建分)</li>
+				<li onclick="insertHtml('[名称]');">[名称](流程名称)</li>
+				<li onclick="insertHtml('[类别]');">[类别](流程类别)</li>
+				<li onclick="insertHtml('[创建人]');">[创建人](流程创建人)</li>
+			</ul>
+		</div>
+		<span style="color:red;"> <var id="lang_tip"></var> </span>
+	</div>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>插入文档要素</title>
+    <script type="text/javascript" src="../internal.js"></script>
+    <style type="text/css">
+    body {
+    	font-size:14px;
+    	color: black;
+    }
+    ul>li{
+    	padding: 5px 0 5px 0;
+    	border: 1px solid white;
+    	cursor: pointer;
+    }
+    ul>li:HOVER {
+		border: 1px solid #aaa;
+		background: #ccc;
+	}
+    </style>
+</head>
+<body>
+	<div style="padding: 10px; margin: 5px;">
+	<span style="color:red;">
+		<var id="lang_tip"></var>
+	</span>
+	
+	<div style="margin-top: 10px;">
+		<ul>
+			<li onclick="insertHtml('[***标题***]');">[***标题***](文档标题)</li>
+			<li onclick="insertHtml('[***内容***]');">[***内容***](文档内容)</li>
+			<li onclick="insertHtml('[***创建人***]');">[***创建人***](文档创建人)</li>
+			<li onclick="insertHtml('[***创建时间***]');">[***创建时间***](文档创建时间)</li>
+		</ul>
+	</div>
+    </div>
+    <script type="text/javascript">
+    function insertHtml(content) {
+    	// 插入内容到编辑器
+        editor.execCommand('inserthtml',content);
+    }
+    </script>
+</body>
+</html>

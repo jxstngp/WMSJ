@@ -1,0 +1,370 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>从图片空间里选择</title>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link href="../../../../../listing/plugins/ztree/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="sutuimg.css" />
+    <script type="text/javascript" src="../internal.js"></script>
+    <script type="text/javascript" src="../../../../../listing/js/jquery-1.12.1.min.js"></script>
+    <script type="text/javascript" src="../../../../../listing/plugins/ztree/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="../../../../../listing/js/bootstrap-paginator.js"></script> 
+    <script type="text/javascript" src="../pic_drop.js"></script>
+    <script type="text/javascript">
+	//获取设置图片真实宽高的方法
+	function getImgRealPX(url){
+		var $IMG = new Image();
+	    $IMG.src = url;
+	    $IMG.onload = function(){
+	        var width = $IMG.width;
+	        var height = $IMG.height;
+	        var imgDom = $('#select_img_list img[src="'+url+'"]');
+	        if(imgDom.length > 0){
+	            var text = width + ' * ' + height;
+	            imgDom.closest('li').find('#pic_size').html(text);
+	        }
+	    };
+	}
+</script>
+</head>
+<body>
+	<input type="hidden" id="pageNo" name="pageNo" value="1"/>
+    <input type="hidden" id="totalPage" name="totalPage" value=""/>
+    <input type="hidden" id="pageSize" name="pageSize" value="20"/>
+    <input type="hidden" id="totalSize" name="totalSize" value=""/>
+    <input type="hidden" id="cateId" name="cateId" value="">
+	<div id="select_fromspace" class="select_fromspace">
+	<div class="selectimg_left">
+		<div class="menu_tree">
+			<h4>图片空间的分类</h4>
+			<ul id="tree" class="ztree"></ul>
+		</div>
+		<div>
+			<table class="picture_info_table">
+				<tbody>
+					<tr>
+						<th colspan="2" class="text-center">图片空间使用情况</th>
+					</tr>
+					<tr>
+						<td>总容量</td><td id="sizeAllowTd">0M</td>
+					</tr>
+					<tr>
+						<td>已使用</td><td id="sizeUsedTd">0M</td>
+					</tr>
+					<tr>
+						<td>剩余空间</td><td id="sizeAvailableTd">0M</td>
+					</tr>
+					<tr>
+						<td>存储张数</td><td id="imgNumTd">0</td>
+					</tr>
+				</tbody>
+		</table>
+		</div>
+	</div>
+	<div class="right_body picutre_form">
+		<div class="picture_search">
+			<label class="name_label">名称：</label>
+			<div class="name_input">
+				<input type="text" class="picture_input" id="name">
+			</div>
+			<div class="name_btn">
+						<button type="button" onclick="search();">搜索</button>
+<!-- 						<button type="button">上传图片</button> -->
+			</div>
+		</div>
+		<div class="category_nav">
+			图片<span>&gt;</span> <span>所有分类</span>
+		</div>
+		<div class="select_img_page">
+			<ul id="upPage" class="pagination"></ul>
+		</div>
+		<div class="select_img_list">
+			<ul id="select_img_list">
+			</ul>
+		</div>
+		<div class="select_img_page">
+			<ul id="downPage" class="pagination"></ul>
+		</div>
+		<div class="pictures_list">
+			<dl class="pic-drop" id="pic-drop">
+			</dl>
+		</div>
+	</div>
+</div>
+  <script type="text/javascript">
+	  var options = {
+			  bootstrapMajorVersion:3,
+			  currentPage: 1,
+			  totalPages: 30,
+			  numberOfPages:5,
+	 		 itemTexts: function (type, page, current) {
+	             switch (type) {
+		             case "first":
+		                 return "首页";
+		             case "prev":
+		                 return "上一页";
+		             case "next":
+		                 return "下一页";
+		             case "last":
+		                 return "尾页";
+		             case "page":
+		                 return page;
+	             }
+	         },
+	         tooltipTitles: function (type, page, current){
+	        	 switch (type) {
+		             case "first":
+		                 return "第一页";
+		             case "prev":
+		                 return "上一页";
+		             case "next":
+		                 return "下一页";
+		             case "last":
+		                 return "最后一页";
+		             case "page":
+		                 return "第" +page + "页";
+	         	}
+	         },
+	         onPageClicked: function(event, originalEvent, type,page){
+	         }
+	};
+  setting = {
+			view: {
+				showIcon: false
+			},
+			check: {
+				enable: false
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback:{
+				onClick: zTreeOnClick
+			}
+		};
+  	reloadDataPublishPage(1,20);
+  	getPicCates();
+  	getEnterpriseSet();
+  	
+  	function zTreeOnClick(event, treeId, treeNode) {
+  		$('#cateId').val(treeNode.id);
+  		if(treeNode.id != 0){
+	  		$('.category_nav').html('图片<span>&gt;</span> <span>所有分类</span><span>&gt;</span> <span>'+treeNode.name+'</span>');
+  		}else{
+  			$('.category_nav').html('图片<span>&gt;</span> <span>所有分类</span>');
+  		}
+  		search();
+  	};
+  	
+  	function getPicCates(){
+  		$.ajax({
+	        url: "../../../../../../api/listing/piccate/getPicCateTree",
+	        type: "POST",
+	        data: {},
+	        success: function(data) {
+	        	if(data != null){
+	        		try{
+	        			var node = data.data;
+		        		var jsonobj = JSON.parse(node);
+		        		getPicCateTree(jsonobj);
+	        		}catch(e){}
+	        	}
+	        },
+	        dataType: "json"
+	  });
+  	}
+  	
+  	//获取企业设置信息
+  	function getEnterpriseSet(){
+  		$.ajax({
+	        url: "../../../../../../api/sys/getEnterpriseSetById",
+	        type: "POST",
+	        data: {},
+	        success: function(data) {
+	        	if(data != null && data.rs == 1){
+	        		try{
+	        			var set = data.data;
+	        			//总容量
+	        			var totalStorageSize = set.totalStorageSize;
+	        			//已使用容量
+	        			var useStorageSize = set.useStorageSize;
+	        			//未使用容量
+	        			var noStorageSize = totalStorageSize - useStorageSize;
+	        			var totalSize = parseFloat(totalStorageSize/1024).toFixed(2);
+	        			var useSize = parseFloat(useStorageSize/1024).toFixed(2);
+	        			var noSize = parseFloat(noStorageSize/1024).toFixed(2);
+	        			$('#sizeAllowTd').html(totalSize+'M');
+	        			$('#sizeUsedTd').html(useSize+'M');
+	        			$('#sizeAvailableTd').html(noSize+'M');
+	        		}catch(e){}
+	        	}
+	        },
+	        dataType: "json"
+	  });
+  	}
+  	
+  	function getPicCateTree(data){
+  		$.fn.zTree.init($("#tree"), setting, data);
+  	}
+  	
+  	function initImgPage(){
+  		options.currentPage = $("#pageNo").val();
+  		options.totalPages	= $("#totalPage").val();
+  		options.numberOfPages =$("#pageSize").val();
+  		options.numberOfPagesArr = [20,40];
+  		options.onPageClicked = function(event, originalEvent, type, page){
+  	  		//为了控制显示的页数和每页数据多少条增加此参数
+  	  		var pageNum = $('#pageSize').val();
+  	  		reloadImgPage(getPagination(page, pageNum));
+  	  	};
+  	  	options.onPageSelected =  function (event){
+  	 	   var pageSelect =  $(event.target);
+  	 		reloadImgPage(getPagination(1, pageSelect.val()));
+  	    };
+  	  	
+  		$("#upPage").bootstrapPaginator(options);
+  		$("#downPage").bootstrapPaginator(options);
+  	}
+  	
+  	/**
+  	 * 分页对象(方便后期加查询条件)
+  	 * @param pageNo
+  	 * @param pageSize
+  	 * @returns 对象
+  	 */
+  	function  getPagination(pageNo,pageSize){
+  		var obj = {"page":pageNo,"rows":pageSize};
+  		if($("#name").val()!=''){
+ 			 obj.attName = $("#name").val();
+ 		}
+  		if($("#cateId").val() != ''){
+  			obj.cateId = $("#cateId").val();
+  		}
+  		return obj;
+  	}
+  	
+  	/**产品加载列表**/
+	function reloadDataPublishPage(pageNo, pageSize){
+		 $.ajax({
+		  		url:'../../../../../../api/listing/album/getLisEnterpriseProductList',
+		  		type:"post",
+		  		dataType:"json",
+		  		beforeSend:function(){},
+		  		data:{
+		        	"page":pageNo,
+		        	"rows":pageSize
+		        },
+		  		success:function(data){
+		  			var liStr = '';
+		  			$('#select_img_list').empty();
+		  			var totalRows = data.data.totalRows;
+		  			$('#imgNumTd').text(totalRows);
+		  			$('#pageNo').val(pageNo);
+		  			$('#totalPage').val(data.data.totalPages);
+		  			$('#pageSize').val(pageSize);
+		  			$('#totalSize').val(totalRows);
+		  			initImgPage();
+		  			$.each(data.data.data,function(i,n){
+		  				liStr += '<li>';
+		  				liStr += '<div class="picture_con" onclick="initCheckBox(this);">';
+		  				liStr += '<label class="checkbox"><em>选择图片</em>';
+		  				liStr += '<div class="picture_in">';
+		  				liStr += '<img src="'+n.attPath.replace(/\\/g, '/')+'">';
+		  				liStr += '</div></label>';
+		  				liStr += '<span class="picture_info">';
+		  				liStr += '<h5 title="'+n.attName+'">'+n.attName+'</h5>';
+		  				liStr += '<span id="pic_size">1024*1024</span><em class="redtext_link">'+n.attSize+'KB</em>';
+		  				liStr += '</span></div></li>';
+		  				getImgRealPX(''+n.attPath.replace(/\\/g, '/'));
+		  			});
+		  			$('#select_img_list').append(liStr);
+		  		}
+		  });
+	}
+  	
+  	/**重新加载列表**/
+  	function reloadImgPage(param){
+  	  $.ajax({
+  		url:'../../../../../../api/listing/album/getLisEnterpriseProductList',
+  		type:"post",
+  		dataType:"json",
+  		beforeSend:function(){},
+  		data:param,
+  		success:function(data){
+  			var liStr = '';
+  			$('#select_img_list').empty();
+  			var totalRows = data.data.totalRows;
+  			$('#imgNumTd').text(totalRows);
+  			$('#pageNo').val(param.page);
+  			$('#totalPage').val(data.data.totalPages);
+  			$('#pageSize').val(param.rows);
+  			$('#totalSize').val(totalRows);
+  			initImgPage();
+  			if(data.data.data.length > 0){
+  				$.each(data.data.data,function(i,n){
+  	  				liStr += '<li>';
+  	  				liStr += '<div class="picture_con" onclick="initCheckBox(this);">';
+  	  				liStr += '<label class="checkbox"><em>选择图片</em>';
+  	  				liStr += '<div class="picture_in">';
+  	  				liStr += '<img src="'+n.attPath.replace(/\\/g, '/')+'">';
+  	  				liStr += '</div></label>';
+  	  				liStr += '<span class="picture_info">';
+  	  				liStr += '<h5 title="'+n.attName+'">'+n.attName+'</h5>';
+  	  				liStr += '<span id="pic_size">1024*1024</span><em class="redtext_link">'+n.attSize+'KB</em>';
+  	  				liStr += '</span></div></li>';
+  	  				getImgRealPX(''+n.attPath.replace(/\\/g, '/'));
+  	  			});
+  			}else{
+  				liStr = '<div style="margin-top:50px;text-align:center;">无符合条件的数据！</div>';
+  			}
+  			$('#select_img_list').append(liStr);
+  		}
+  		});
+  	}
+  	
+  	function search(){
+  		var param = getPagination(1, $("#pageSize").val());
+  		reloadImgPage(param);
+  	}
+	dialog.onok = handleDialogOk;
+	dialog.oncancel = function(){
+		editor._sutuimg = null;
+	};
+	function handleDialogOk() {
+		$('#pic-drop dd').each(function(i,e){
+			var $img = $(this).find('img').attr('src');
+			editor.execCommand("inserthtml", '<img src="'+$img+'">');
+		});
+		editor._sutuimg = null;
+	}
+	
+	function initCheckBox(obj){
+		var $checkbox = $(obj).find('label.checkbox');
+		$checkbox.toggleClass('checked');
+		if(!$checkbox.hasClass('checked')){
+			var $src = $(obj).closest('li').find('img').attr('src');
+			$('#pic-drop').find('img[src="'+$src+'"]').closest('dd').remove();
+		}else{
+			var $src = $(obj).closest('li').find('img').attr('src');
+			var $dd = '<dd>'+
+					  '<div class="pictures_in">'+
+					  '<img src="'+$src +'" />'+
+					  '</div>'+
+					  '<span class="pictures_del" onclick="delImg(this)">x</span>'
+					  +'</dd>';
+			$('#pic-drop').append($dd);
+			$('.pic-drop dd').off();
+			$('.pic-drop').sortable();
+		}
+	}
+	
+	function delImg(obj){
+		var $src = $(obj).closest('dd').find('img').attr('src');
+		$('#select_img_list').find('img[src="'+$src+'"]').closest('li').find('label.checkbox').removeClass("checked");
+		$(obj).closest('dd').remove();
+	}
+    </script>
+</body>
+</html>

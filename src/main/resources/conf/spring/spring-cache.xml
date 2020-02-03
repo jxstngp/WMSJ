@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>     
+<beans xmlns="http://www.springframework.org/schema/beans"    
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"    
+		xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 该 BeanPostProcessor 将自动起作用，对标注 @Resource 的 Bean 进行自动注入 -->
+	<bean class="org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor" />
+	
+	<bean id="resubmitCache" class="com.samton.platform.framework.cache.memcached.impl.MemcachedCacheImpl" scope="singleton">
+		<property name="basename" value="resubmit" />
+		<property name="timeout" value="1" />
+	</bean>
+
+<!-- 
+	<bean id="pmCache" class="com.samton.platform.framework.cache.memcached.impl.MemcachedCacheImpl" scope="singleton">
+		<property name="basename" value="pm" />
+		<property name="timeout" value="3600" />
+	</bean>
+
+	<bean id="sysCache" class="com.samton.platform.framework.cache.memcached.impl.MemcachedCacheImpl" scope="singleton">
+		<property name="basename" value="sys" />
+		<property name="timeout" value="0" />
+	</bean>
+	
+	<bean id="userCache" class="com.samton.platform.framework.cache.memcached.impl.MemcachedCacheImpl" scope="singleton">
+		<property name="basename" value="user" />
+		<property name="timeout" value="0" />
+	</bean>
+	
+	<bean id="smsCache" class="com.samton.platform.framework.cache.memcached.impl.MemcachedCacheImpl" scope="singleton">
+		<property name="basename" value="remind" />
+		<property name="timeout" value="0" />
+	</bean>
+ -->
+	        
+</beans>
