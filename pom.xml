@@ -155,14 +155,14 @@
 		<!-- 导入dbcp的jar包，用来在applicationContext.xml中配置数据库 -->
 		<!-- <dependency>
 			<groupId>commons-dbcp</groupId>
-			<artifactId>commons-dbcp</artifactId> 
+			<artifactId>commons-dbcp</artifactId>
 			<version>1.2.2</version>
 		</dependency> -->
 
-		<!-- 依赖的公共类库 用 dbcp2 然后 spring的 ben 的datasource需要改名称 dbcp2 : 这样 <bean id="dataSource" 
-			class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close"> 
+		<!-- 依赖的公共类库 用 dbcp2 然后 spring的 ben 的datasource需要改名称 dbcp2 : 这样 <bean id="dataSource"
+			class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 			同时maxActive maxWait 2个属性换成了 maxTotal maxWaitMillis -->
-			
+
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-dbcp2</artifactId>
@@ -206,22 +206,22 @@
 			<artifactId>dom4j</artifactId>
 			<version>1.6.1</version>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.fasterxml.jackson.core</groupId> -->
-<!-- 			<artifactId>jackson-core</artifactId> -->
-<!-- 			<version>2.1.4</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.fasterxml.jackson.core</groupId> -->
-<!-- 			<artifactId>jackson-databind</artifactId> -->
-<!-- 			<version>2.1.4</version> -->
-<!-- 		</dependency> -->
-<!-- 		<dependency> -->
-<!-- 			<groupId>com.fasterxml.jackson.core</groupId> -->
-<!-- 			<artifactId>jackson-annotations</artifactId> -->
-<!-- 			<version>2.1.4</version> -->
-<!-- 		</dependency> -->
-		
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>com.fasterxml.jackson.core</groupId> -->
+		<!-- 			<artifactId>jackson-core</artifactId> -->
+		<!-- 			<version>2.1.4</version> -->
+		<!-- 		</dependency> -->
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>com.fasterxml.jackson.core</groupId> -->
+		<!-- 			<artifactId>jackson-databind</artifactId> -->
+		<!-- 			<version>2.1.4</version> -->
+		<!-- 		</dependency> -->
+		<!-- 		<dependency> -->
+		<!-- 			<groupId>com.fasterxml.jackson.core</groupId> -->
+		<!-- 			<artifactId>jackson-annotations</artifactId> -->
+		<!-- 			<version>2.1.4</version> -->
+		<!-- 		</dependency> -->
+
 		<!-- json -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
@@ -239,8 +239,8 @@
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
 			<version>${jackson.databind.version}</version>
-		</dependency>		
-		
+		</dependency>
+
 		<dependency>
 			<groupId>commons-pool</groupId>
 			<artifactId>commons-pool</artifactId>
@@ -353,37 +353,37 @@
 			<version>1.7.7</version>
 		</dependency>
 		<!-- 极光推送结束 -->
-		
-	    <!--JSON处理包-->
-	    <dependency>
+
+		<!--JSON处理包-->
+		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 			<version>1.2.25</version>
-		</dependency>	
-		
+		</dependency>
+
 		<!-- 中文转拼音 -->
 		<dependency>
-		    <groupId>com.belerweb</groupId>
-		    <artifactId>pinyin4j</artifactId>
-		    <version>2.5.0</version>
+			<groupId>com.belerweb</groupId>
+			<artifactId>pinyin4j</artifactId>
+			<version>2.5.0</version>
 		</dependency>
-		
+
 		<!-- freemarker -->
 		<dependency>
-	        <groupId>org.freemarker</groupId>
-	        <artifactId>freemarker</artifactId>
-	        <version>2.3.16</version>
-	    </dependency>	
-	    
-	    <!-- redis配置文件开始 -->
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.16</version>
+		</dependency>
+
+		<!-- redis配置文件开始 -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-redis</artifactId>
 			<version>1.6.1.RELEASE</version>
 		</dependency>
-		<dependency>  
-			<groupId>redis.clients</groupId>  
-			<artifactId>jedis</artifactId>  
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
 			<version>2.7.3</version>
 		</dependency>
 		<!-- redis配置文件结束 -->
@@ -402,6 +402,12 @@
 			<version>1.5.7</version>
 		</dependency>
 		<!-- antisamy包结束 -->
+
+		<dependency>
+			<groupId>xml-apis</groupId>
+			<artifactId>xml-apis</artifactId>
+			<version>1.4.01</version>
+		</dependency>
 
 	</dependencies>
 
