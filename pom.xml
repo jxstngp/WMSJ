@@ -17,7 +17,7 @@
 		<!-- log4j日志文件管理包版本 -->
 		<slf.version>1.7.10</slf.version>
 		<jackson.version>1.9.13</jackson.version>
-		<jackson.databind.version>2.9.10.1</jackson.databind.version>
+		<jackson.databind.version>2.12.6.1</jackson.databind.version>
 	</properties>
 
 	<!-- 设定主仓库，按设定顺序进行查找。 -->
